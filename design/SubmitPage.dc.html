@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#0E0F10}a{color:#EDEBE7;text-decoration:none}a:hover{color:#EDEBE7}input::placeholder{color:#8C8A86}</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative; background:#0E0F10; color:#EDEBE7; font-family:'Geist',system-ui,sans-serif; -webkit-font-smoothing:antialiased;">
+  <div style="position:relative; padding:0 {{ margin }}px;">
+    <div style="border-left:1px solid rgba(255,255,255,0.08); border-right:1px solid rgba(255,255,255,0.08);">
+      <dc-import name="CLTopBar" bp="{{ bp }}" active="submit" style="position:sticky; top:0; z-index:20; display:block;" hint-size="100%,64px"></dc-import>
+
+      <header style="padding:{{ headPadT }}px {{ padX }}px {{ secPadY }}px; border-bottom:1px solid rgba(255,255,255,0.08);">
+        <h1 style="margin:0; font-size:{{ pageTitle }}px; line-height:1.1; letter-spacing:-0.02em; font-weight:500;">submit your context</h1>
+        <p style="margin:16px 0 0; max-width:56ch; font-size:15px; line-height:1.5; color:#8C8A86; text-wrap:pretty;">files that carried a real project. we test every one before it goes live.</p>
+      </header>
+
+      <div style="display:grid; grid-template-columns:{{ splitCols }}; align-items:start;">
+        <div style="min-width:0; padding:{{ secPadY }}px {{ padX }}px {{ formPadB }}px; border-right:1px solid {{ mainBorderR }}; border-bottom:1px solid {{ mainBorderB }};">
+          <sc-if value="{{ isSuccess }}">
+            <div style="max-width:640px; padding:{{ successPad }}px 0;">
+              <div style="font-size:{{ display }}px; line-height:1.1; letter-spacing:-0.02em; font-weight:500;">received.</div>
+              <p style="margin:20px 0 0; font-size:15px; line-height:1.5; color:#EDEBE7;">we'll test it and email you within a week.</p>
+              <a href="#" onClick="{{ reset }}" style="margin-top:32px; height:48px; padding:0 20px; display:inline-flex; align-items:center; gap:10px; border:1px solid #EDEBE7; color:#EDEBE7; font-size:15px; font-weight:500;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">browse the library <svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 13L13 1M3.5 1H13V10.5"></path></svg></a>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isForm }}" hint-placeholder-val="{{ true }}">
+            <form onSubmit="{{ onSubmit }}" style="max-width:640px; display:flex; flex-direction:column; gap:28px;">
+              <label style="display:flex; flex-direction:column; gap:10px;">
+                <span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">name</span>
+                <input value="{{ f.name }}" onChange="{{ on.name }}" placeholder="your name" style="height:52px; box-sizing:border-box; width:100%; padding:0 16px; background:#0E0F10; border:1px solid rgba(255,255,255,0.2); border-radius:0; color:#EDEBE7; font-family:'Geist',sans-serif; font-size:15px; outline:none;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">
+              </label>
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">x handle</span>
+                <div style="position:relative;">
+                  <span style="position:absolute; left:16px; top:0; height:52px; display:flex; align-items:center; color:#8C8A86; font-size:15px; pointer-events:none;">@</span>
+                  <input value="{{ f.x }}" onChange="{{ on.x }}" placeholder="handle" style="height:52px; box-sizing:border-box; width:100%; padding:0 16px 0 34px; background:#0E0F10; border:1px solid rgba(255,255,255,0.2); border-radius:0; color:#EDEBE7; font-family:'Geist',sans-serif; font-size:15px; outline:none;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">
+                </div>
+                <sc-if value="{{ xError }}"><div style="border-left:2px solid #FF5B1F; padding:2px 0 2px 14px; font-size:14px; line-height:1.5; color:#EDEBE7;">x handle is required</div></sc-if>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">type</span>
+                <div style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); border-left:1px solid rgba(255,255,255,0.2);">
+                  <sc-for list="{{ types }}" as="t" hint-placeholder-count="3">
+                    <button type="button" onClick="{{ t.onClick }}" style="height:52px; display:flex; align-items:center; justify-content:center; gap:12px; background:{{ t.bg }}; border:1px solid rgba(255,255,255,0.2); border-left:0; border-radius:0; cursor:pointer; padding:0 14px;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">
+                      <span style="flex:none; width:14px; height:14px; box-sizing:border-box; border:1px solid {{ t.c }}; display:flex; align-items:center; justify-content:center;"><span style="width:6px; height:6px; background:{{ t.dot }};"></span></span>
+                      <span style="display:inline-flex; align-items:center; height:22px; box-sizing:border-box; padding:0 {{ tagPad }}px; border:1px solid {{ t.c }}; background:{{ t.fill }}; color:{{ t.ink }}; outline:{{ t.outline }}; outline-offset:2px; font-family:'Geist Mono',monospace; font-size:12px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;">{{ t.label }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+              <label style="display:flex; flex-direction:column; gap:10px;">
+                <span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">title</span>
+                <input value="{{ f.title }}" onChange="{{ on.title }}" placeholder="what it's called" style="height:52px; box-sizing:border-box; width:100%; padding:0 16px; background:#0E0F10; border:1px solid rgba(255,255,255,0.2); border-radius:0; color:#EDEBE7; font-family:'Geist',sans-serif; font-size:15px; outline:none;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">
+              </label>
+              <label style="display:flex; flex-direction:column; gap:10px;">
+                <span style="display:flex; justify-content:space-between; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;"><span>one-line description</span><span>{{ descCount }}</span></span>
+                <input value="{{ f.desc }}" onChange="{{ on.desc }}" maxLength="120" placeholder="what it does, in one line" style="height:52px; box-sizing:border-box; width:100%; padding:0 16px; background:#0E0F10; border:1px solid rgba(255,255,255,0.2); border-radius:0; color:#EDEBE7; font-family:'Geist',sans-serif; font-size:15px; outline:none; text-overflow:ellipsis;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">
+              </label>
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">works with</span>
+                <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                  <sc-for list="{{ tools }}" as="c" hint-placeholder-count="5">
+                    <button type="button" onClick="{{ c.onClick }}" style="height:36px; padding:0 14px; background:{{ c.bg }}; color:{{ c.ink }}; border:1px solid {{ c.border }}; border-radius:0; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">{{ c.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">file</span>
+                <sc-if value="{{ noFile }}">
+                  <div style="height:140px; display:flex; align-items:center; justify-content:center; padding:0 20px; border:1px dashed rgba(255,255,255,0.3); text-align:center; font-size:15px; color:#8C8A86;">
+                    <span>drop .md or .zip — or <button type="button" onClick="{{ attach }}" style="height:44px; padding:0 2px; background:none; border:0; color:#EDEBE7; font-family:'Geist',sans-serif; font-size:15px; text-decoration:underline; text-underline-offset:4px; cursor:pointer;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">browse</button></span>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ hasFile }}">
+                  <div style="height:64px; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 4px 0 16px; border:1px solid rgba(255,255,255,0.2); background:#141517;">
+                    <span style="display:flex; align-items:baseline; gap:12px; min-width:0; font-family:'Geist Mono',monospace; font-size:13px;"><span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">mobile-app-kit.zip</span><span style="color:#8C8A86;">18 kb</span></span>
+                    <button type="button" onClick="{{ detach }}" aria-label="remove file" style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:none; border:0; color:#EDEBE7; cursor:pointer;" style-focus="outline:2px solid #FF5B1F; outline-offset:-2px;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l10 10M11 1L1 11"></path></svg></button>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">before / after image · optional</span>
+                <div style="height:88px; display:flex; align-items:center; justify-content:center; padding:0 20px; border:1px dashed rgba(255,255,255,0.3); text-align:center; font-size:15px; color:#8C8A86;">drop a .png or .jpg — or <span style="color:#EDEBE7; text-decoration:underline; text-underline-offset:4px; margin-left:5px;">browse</span></div>
+              </div>
+              <button type="button" onClick="{{ toggleAgree }}" style="display:flex; align-items:flex-start; gap:14px; min-height:44px; padding:10px 0; background:none; border:0; color:#EDEBE7; text-align:left; cursor:pointer; font-family:'Geist',sans-serif; font-size:15px; line-height:1.5;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">
+                <span style="flex:none; margin-top:1px; width:20px; height:20px; box-sizing:border-box; border:1px solid #EDEBE7; background:{{ agreeFill }}; display:flex; align-items:center; justify-content:center; color:#0E0F10;"><sc-if value="{{ f.agree }}"><svg width="11" height="10" viewBox="0 0 10 9" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 4.8L3.8 7.6L9 1.2"></path></svg></sc-if></span>
+                <span>this is mine or credited, has no private or client data, and anyone may use it under cc by 4.0</span>
+              </button>
+              <div><button type="submit" disabled="{{ disabled }}" style="height:48px; padding:0 32px; background:#FF5B1F; color:#0E0F10; border:0; border-radius:0; font-family:'Geist',sans-serif; font-size:15px; font-weight:500; opacity:{{ btnOpacity }}; cursor:{{ btnCursor }};" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">submit</button></div>
+            </form>
+          </sc-if>
+        </div>
+
+        <aside style="position:{{ asidePos }}; top:64px;">
+          <div style="padding:{{ secPadY }}px {{ padX }}px 20px; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">what gets accepted</div>
+          <sc-for list="{{ rules }}" as="r" hint-placeholder-count="5">
+            <div style="display:flex; gap:20px; padding:18px {{ padX }}px; border-top:1px solid rgba(255,255,255,0.08);">
+              <span style="flex:none; font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86; line-height:22px;">{{ r.n }}</span>
+              <span style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:15px; font-weight:500; line-height:22px;">{{ r.k }}</span><span style="font-size:15px; line-height:1.5; color:#8C8A86;">{{ r.v }}</span></span>
+            </div>
+          </sc-for>
+        </aside>
+      </div>
+
+      <div style="margin-top:{{ footGap }}px; border-top:1px solid {{ footRule }};"><dc-import name="CLFooter" bp="{{ bp }}" hint-size="100%,72px"></dc-import></div>
+    </div>
+    <div style="position:absolute; inset:0; z-index:50; pointer-events:none; opacity:0.06; background-image:{{ grain }};"></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;width&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;empty&quot;,&quot;filled&quot;,&quot;error&quot;,&quot;success&quot;],&quot;default&quot;:&quot;empty&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const GRAIN = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")`;
+const RULE = 'rgba(255,255,255,0.08)';
+const TOOLS = ['claude app', 'claude code', 'claude design', 'cursor', 'other'];
+const RULES = [
+  ['tested', 'works in at least one named tool'],
+  ['shows its output', 'a before/after or example'],
+  ['clean', 'no keys, passwords or client data'],
+  ['credited', 'yours or the source named'],
+  ['specific', 'real decisions, not "make it look good"'],
+];
+const EMPTY = { name: '', x: '', type: null, title: '', desc: '', tools: [], file: false, agree: false };
+const FILLED = { name: 'khalid', x: 'khalerdameen', type: 'kit', title: 'Mobile App Kit', desc: 'Scans your app or interviews you, then writes the CONTEXT.md every design and build prompt reads from.', tools: ['claude code', 'claude app'], file: true, agree: true };
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const s = props.state || 'empty';
+    const f = s === 'filled' ? { ...FILLED } : s === 'error' ? { ...FILLED, x: '' } : s === 'success' ? { ...FILLED } : { ...EMPTY };
+    this.state = { mw: 1440, f, done: s === 'success', touchedX: s === 'error' };
+  }
+  rootRef = React.createRef();
+  componentDidMount() {
+    const el = this.rootRef.current;
+    if (this.props.width == null && el && window.ResizeObserver) {
+      this.ro = new ResizeObserver(e => this.setState({ mw: e[0].contentRect.width }));
+      this.ro.observe(el);
+    }
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  set(k, v) { this.setState(s => ({ f: { ...s.f, [k]: v } })); }
+  renderVals() {
+    const w = this.props.width ?? this.state.mw;
+    const bp = w >= 1024 ? 'd' : w >= 600 ? 't' : 'm';
+    const isD = bp === 'd', isM = bp === 'm';
+    const f = this.state.f;
+    const valid = f.name.trim() && f.x.trim() && f.type && f.title.trim() && f.desc.trim() && f.file && f.agree;
+    const inp = k => e => { this.set(k, e.target.value); if (k === 'x') this.setState({ touchedX: true }); };
+    const done = this.state.done;
+    return {
+      bp, rootRef: this.rootRef, grain: GRAIN,
+      margin: { d: 40, t: 24, m: 16 }[bp], padX: isM ? 20 : 24,
+      headPadT: isM ? 40 : 64, secPadY: isD ? 48 : 40, formPadB: isD ? 72 : 48,
+      pageTitle: { d: 56, t: 44, m: 36 }[bp], display: { d: 72, t: 64, m: 44 }[bp], successPad: isM ? 24 : 64,
+      footGap: isM ? 64 : 96, footRule: 'transparent',
+      splitCols: isD ? 'minmax(0,2fr) minmax(0,1fr)' : 'minmax(0,1fr)',
+      mainBorderR: isD ? RULE : 'transparent', mainBorderB: isD ? 'transparent' : RULE,
+      asidePos: isD ? 'sticky' : 'relative',
+      isSuccess: done, isForm: !done, f,
+      on: { name: inp('name'), x: inp('x'), title: inp('title'), desc: inp('desc') },
+      xError: this.state.touchedX && !f.x.trim(),
+      descCount: `${f.desc.length} / 120`,
+      tagPad: isM ? 8 : 14,
+      types: ['context', 'skill', 'kit'].map(t => {
+        const on = f.type === t, c = on ? '#EDEBE7' : '#8C8A86';
+        const filled = t !== 'context';
+        return { label: t, bg: on ? '#141517' : 'transparent', c, dot: on ? '#EDEBE7' : 'transparent', fill: filled ? c : 'transparent', ink: filled ? '#0E0F10' : c, outline: t === 'kit' ? `1px solid ${c}` : 'none', onClick: () => this.set('type', t) };
+      }),
+      tools: TOOLS.map(label => {
+        const on = f.tools.includes(label);
+        return { label, bg: on ? '#EDEBE7' : 'transparent', ink: on ? '#0E0F10' : '#EDEBE7', border: on ? '#EDEBE7' : 'rgba(255,255,255,0.2)', onClick: () => this.set('tools', on ? f.tools.filter(x => x !== label) : [...f.tools, label]) };
+      }),
+      noFile: !f.file, hasFile: f.file,
+      attach: () => this.set('file', true), detach: () => this.set('file', false),
+      toggleAgree: () => this.set('agree', !f.agree), agreeFill: f.agree ? '#EDEBE7' : 'transparent',
+      disabled: !valid, btnOpacity: valid ? 1 : 0.35, btnCursor: valid ? 'pointer' : 'not-allowed',
+      onSubmit: e => { e.preventDefault(); if (valid) this.setState({ done: true }); },
+      reset: e => { e.preventDefault(); this.setState({ done: false, f: { ...EMPTY }, touchedX: false }); },
+      rules: RULES.map(([k, v], i) => ({ n: '0' + (i + 1), k, v })),
+    };
+  }
+}
+</script>
+</body>
+</html>

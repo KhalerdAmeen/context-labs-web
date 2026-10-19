@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<a href="#" onClick="{{ noop }}" onMouseEnter="{{ onEnter }}" onMouseLeave="{{ onLeave }}" style="position:relative; box-sizing:border-box; height:100%; display:flex; flex-direction:column; padding:{{ pad }}px; color:#EDEBE7; text-decoration:none; font-family:'Geist',system-ui,sans-serif; background:{{ look.bg }}; transition:{{ look.trans }};" style-focus="outline:2px solid #FF5B1F; outline-offset:2px; z-index:3;">
+  <div style="height:24px; display:flex; align-items:center;">
+    <sc-if value="{{ isContext }}"><span style="display:inline-flex; align-items:center; height:24px; box-sizing:border-box; padding:0 14px; border:1px solid #EDEBE7; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">context</span></sc-if>
+    <sc-if value="{{ isSkill }}"><span style="display:inline-flex; align-items:center; height:24px; padding:0 14px; background:#EDEBE7; color:#0E0F10; font-family:'Geist Mono',monospace; font-size:12px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;">skill</span></sc-if>
+    <sc-if value="{{ isKit }}"><span style="display:inline-flex; align-items:center; height:24px; margin-left:3px; padding:0 14px; background:#EDEBE7; color:#0E0F10; outline:1px solid #EDEBE7; outline-offset:2px; font-family:'Geist Mono',monospace; font-size:12px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;">kit</span></sc-if>
+  </div>
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" style="position:absolute; top:29px; right:24px; color:{{ look.arrowColor }}; transform:{{ look.arrowT }}; transition:{{ look.trans }};"><path d="M1 13L13 1M3.5 1H13V10.5"></path></svg>
+  <div style="margin-top:20px; font-size:20px; font-weight:500; line-height:1.25; letter-spacing:-0.01em; padding-right:24px;">{{ e.title }}</div>
+  <div style="margin-top:8px; max-width:56ch; height:67.5px; overflow:hidden; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3; font-size:15px; line-height:1.5; color:#8C8A86; text-wrap:pretty;">{{ e.desc }}</div>
+  <div style="position:relative; margin-top:24px; height:133px; overflow:hidden; font-family:'Geist Mono',monospace; font-size:13px; line-height:19px;">
+    <sc-for list="{{ lines }}" as="ln" hint-placeholder-count="5">
+      <div style="display:flex; align-items:center; gap:8px; height:19px; white-space:pre; overflow:hidden; color:{{ ln.color }};">
+        <sc-if value="{{ ln.x }}"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.4" style="flex:none;"><path d="M1 1l7 7M8 1L1 8"></path></svg></sc-if>
+        <sc-if value="{{ ln.ok }}"><svg width="10" height="9" viewBox="0 0 10 9" fill="none" stroke="currentColor" stroke-width="1.4" style="flex:none;"><path d="M1 4.8L3.8 7.6L9 1.2"></path></svg></sc-if>
+        <span style="overflow:hidden;">{{ ln.t }}</span>
+      </div>
+    </sc-for>
+    <div style="position:absolute; left:0; right:0; top:0; height:200px; background:{{ look.fade }}; transform:{{ look.fadeT }}; transition:{{ look.trans }};"></div>
+    <div style="position:absolute; top:0; right:0; bottom:0; width:48px; background:{{ look.fadeR }};"></div>
+  </div>
+  <div style="margin-top:auto; padding-top:24px; display:flex; flex-direction:column; gap:4px; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">
+    <span>khalid · @khalerdameen</span>
+    <span>{{ e.tools }}</span>
+  </div>
+</a>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:360,&quot;height&quot;:440},&quot;entryId&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;mobile-kit&quot;,&quot;context&quot;,&quot;handoff&quot;,&quot;review&quot;,&quot;ios&quot;,&quot;planmode&quot;],&quot;default&quot;:&quot;context&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;bp&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;d&quot;,&quot;t&quot;,&quot;m&quot;],&quot;default&quot;:&quot;d&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;forceHover&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const ENTRIES = {
+  'mobile-kit': { type: 'kit', title: 'Mobile App Kit', tools: 'claude code · claude app',
+    desc: 'Scans your app or interviews you, then writes the CONTEXT.md every design and build prompt reads from.',
+    lines: ['## Tokens', '| Accent | #C41E3A | stars, active nav, 1 primary | code (47×) + you |', '## Rules', '- Radius: 8 / 14 / 20 / 28 / full. Nothing else.   [you]', '- Spacing: 4pt base. Screen margin 20.            [code]', '- One primary action per screen.                  [you]', '- Tab bar: 4 items, labels always visible.        [code]'] },
+  'context': { type: 'skill', title: 'context', tools: 'claude code · claude app',
+    desc: "Create, extract or update your project's CONTEXT.md with pop-up questions. No file editing.",
+    lines: ['---', 'name: context', 'description: Builds and maintains', '  CONTEXT.md. Use when someone says "set up context"…', '---', '1. Scan the repo for tokens, components, copy', "2. Ask only what the code can't answer"] },
+  'handoff': { type: 'skill', title: 'handoff', tools: 'claude design · claude code',
+    desc: 'Writes the right prompt for the next tool: Claude Design, Claude Code plan mode, or an artifact.',
+    lines: ['[PREAMBLE — Product, Direction, Tokens, Rules]', '[THIS PASS — 3 screens]', '[CHECK BEFORE ACCEPTING — 7 rules]', '', 'target: claude design', 'pass: 1 of 6', 'preamble: repeated verbatim every pass'] },
+  'review': { type: 'skill', title: 'review', tools: 'claude app · claude code',
+    desc: 'Checks screenshots against your context and writes a narrow fix prompt.',
+    lines: ['✕ Accent appears 3× on Today (rule: 1)', '✕ Label 9px from pill edge (rule: 14px)', '✓ Timeline density', '✓ Tab bar labels visible', '✕ Card radius 12 (allowed: 8 / 14 / 20)', '', 'fix prompt → 3 changes, 1 screen'] },
+  'ios': { type: 'context', title: 'iOS App Review', tools: 'claude code',
+    desc: 'What gets apps rejected, as rules your agent checks before you submit.',
+    lines: ['- Sign in with Apple equal to Google if any social login', '- Account deletion reachable in-app', '- Purpose string for every permission', '- Restore purchases visible on the paywall', '- No placeholder content in the review build', '- Privacy manifest lists every tracking domain', '- Demo account in review notes if login is required'] },
+  'planmode': { type: 'context', title: 'Plan Mode Prompt', tools: 'claude code',
+    desc: 'The prompt shape that makes Claude Code plan before it touches a file.',
+    lines: ['Read CONTEXT.md first.', "PLAN FIRST. Don't write code until I approve.", 'Flag conflicts with the stack.', "List every file you'll touch, and why.", 'Stop after the plan. Wait for "go".', '', 'then: one file per step, run tests'] },
+};
+const BRIGHT = /^(#|---|\[|✕|Pass |Read |PLAN|timeline|name:)/;
+
+class Component extends DCLogic {
+  state = { hover: false };
+  noop = e => e.preventDefault();
+  componentDidMount() { this.rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  renderVals() {
+    const e = ENTRIES[this.props.entryId ?? 'context'] || ENTRIES.context;
+    const on = this.state.hover || !!this.props.forceHover;
+    const bg = on ? '#141517' : '#0E0F10';
+    const trans = this.rm ? 'none' : 'transform 200ms ease-out, background-color 200ms ease-out';
+    return {
+      e, noop: this.noop, pad: this.props.bp === 'm' ? 20 : 24,
+      isKit: e.type === 'kit', isSkill: e.type === 'skill', isContext: e.type === 'context',
+      onEnter: () => this.setState({ hover: true }), onLeave: () => this.setState({ hover: false }),
+      look: { bg, trans, fade: `linear-gradient(to bottom, ${bg}00 0px, ${bg}00 57px, ${bg} 95px, ${bg} 100%)`, fadeR: `linear-gradient(to right, ${bg}00, ${bg})`,
+        arrowColor: on ? '#FF5B1F' : '#8C8A86', arrowT: on ? 'translate(4px,-4px)' : 'none', fadeT: on ? 'translateY(38px)' : 'none' },
+      lines: e.lines.map(l => {
+        const x = l.startsWith('✕ '), ok = l.startsWith('✓ ');
+        return { t: x || ok ? l.slice(2) : l, x, ok, color: BRIGHT.test(l) ? '#EDEBE7' : '#8C8A86' };
+      }),
+    };
+  }
+}
+</script>
+</body>
+</html>

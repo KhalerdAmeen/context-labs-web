@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#0E0F10}a{color:#EDEBE7;text-decoration:none}a:hover{color:#EDEBE7}</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative; background:#0E0F10; color:#EDEBE7; font-family:'Geist',system-ui,sans-serif; -webkit-font-smoothing:antialiased; height:{{ rootH }}; overflow-y:{{ rootOverflow }};">
+  <div style="position:relative; padding:0 {{ margin }}px; min-height:100%;">
+    <div style="border-left:1px solid rgba(255,255,255,0.08); border-right:1px solid rgba(255,255,255,0.08);">
+
+      <div ref="{{ barRef }}" style="position:sticky; top:0; z-index:20; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 {{ barPad }}px 0 {{ padX }}px; background:#0E0F10; border-bottom:1px solid rgba(255,255,255,0.08);">
+        <a href="#" onClick="{{ noop }}" style="display:flex; align-items:center; gap:10px; min-height:44px; font-size:18px; font-weight:500; letter-spacing:-0.01em; color:#EDEBE7;">
+          <span style="width:10px; height:10px; box-sizing:border-box; border:1px solid #EDEBE7; display:flex; align-items:center; justify-content:center;"><span style="width:4px; height:4px; background:#EDEBE7;"></span></span>
+          <span>context labs</span>
+        </a>
+        <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; align-items:center;">
+            <a href="#" onClick="{{ noop }}" style="display:flex; align-items:center; height:44px; padding:0 14px; font-size:14px; color:#EDEBE7;">submit</a>
+            <button onClick="{{ noop }}" aria-label="menu" style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:none; border:0; padding:0; color:#EDEBE7; cursor:pointer;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h14M3 13h14"></path></svg>
+            </button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isWide }}" hint-placeholder-val="{{ true }}">
+          <nav style="display:flex; align-items:center;">
+            <a href="#" onClick="{{ noop }}" style="display:flex; align-items:center; height:44px; padding:0 14px; font-size:14px; color:#8C8A86;" style-hover="color:#EDEBE7;">browse</a>
+            <a href="#" onClick="{{ noop }}" style="display:flex; align-items:center; height:44px; padding:0 14px; font-size:14px; color:#8C8A86;" style-hover="color:#EDEBE7;">submit</a>
+            <a href="#" onClick="{{ noop }}" style="display:flex; align-items:center; height:44px; padding:0 14px; font-size:14px; color:#8C8A86;" style-hover="color:#EDEBE7;">about</a>
+          </nav>
+        </sc-if>
+      </div>
+
+      <div style="padding:{{ heroPadT }}px {{ padX }}px {{ heroPadB }}px;">
+        <h1 style="margin:0; font-size:{{ display }}px; line-height:1.1; letter-spacing:-0.02em; font-weight:500; text-wrap:balance;">the context behind good ai work.</h1>
+        <p style="margin:20px 0 0; max-width:52ch; font-size:15px; line-height:1.5; color:#8C8A86; text-wrap:pretty;">context files and skills from people who build. take one, install it, stop getting generic output.</p>
+        <div style="margin-top:24px; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">12 entries · 2 kits · free · cc by</div>
+      </div>
+
+      <div ref="{{ filterRef }}" style="display:flex; align-items:stretch; overflow-x:auto; scrollbar-width:none; white-space:nowrap; padding:0 {{ filterPad }}px; border-top:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);">
+        <sc-for list="{{ typeFilters }}" as="f" hint-placeholder-count="4">
+          <button onClick="{{ f.onClick }}" style="position:relative; flex:none; height:48px; padding:0 14px; background:none; border:0; font-family:inherit; font-size:14px; cursor:pointer; color:{{ f.color }};" style-focus="outline:2px solid #FF5B1F; outline-offset:-2px;">{{ f.label }}<sc-if value="{{ f.active }}"><span style="position:absolute; left:14px; right:14px; bottom:0; height:2px; background:#FF5B1F;"></span></sc-if></button>
+        </sc-for>
+        <span style="flex:none; width:1px; margin:14px 12px; background:rgba(255,255,255,0.16);"></span>
+        <sc-for list="{{ toolFilters }}" as="f" hint-placeholder-count="3">
+          <button onClick="{{ f.onClick }}" style="position:relative; flex:none; height:48px; padding:0 14px; background:none; border:0; font-family:inherit; font-size:14px; cursor:pointer; color:{{ f.color }};" style-focus="outline:2px solid #FF5B1F; outline-offset:-2px;">{{ f.label }}<sc-if value="{{ f.active }}"><span style="position:absolute; left:14px; right:14px; bottom:0; height:2px; background:#FF5B1F;"></span></sc-if></button>
+        </sc-for>
+      </div>
+
+      <div style="display:grid; grid-template-columns:{{ gridCols }}; margin-right:-1px;">
+        <sc-for list="{{ cards }}" as="c" hint-placeholder-count="6">
+          <a href="#" data-id="{{ c.id }}" onClick="{{ c.noop }}" onMouseEnter="{{ c.onEnter }}" onMouseLeave="{{ c.onLeave }}" style="position:relative; grid-column:{{ c.span }}; display:flex; flex-direction:column; padding:{{ c.pad }}px; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08); color:#EDEBE7; background:{{ c.bg }}; transition:{{ c.trans }};" style-focus="outline:2px solid #FF5B1F; outline-offset:2px; z-index:3;">
+            <div style="height:24px; display:flex; align-items:center;">
+              <sc-if value="{{ c.isContext }}"><span style="display:inline-flex; align-items:center; height:24px; box-sizing:border-box; padding:0 14px; border:1px solid #EDEBE7; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">context</span></sc-if>
+              <sc-if value="{{ c.isSkill }}"><span style="display:inline-flex; align-items:center; height:24px; padding:0 14px; background:#EDEBE7; color:#0E0F10; font-family:'Geist Mono',monospace; font-size:12px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;">skill</span></sc-if>
+              <sc-if value="{{ c.isKit }}"><span style="display:inline-flex; align-items:center; height:24px; margin-left:3px; padding:0 14px; background:#EDEBE7; color:#0E0F10; outline:1px solid #EDEBE7; outline-offset:2px; font-family:'Geist Mono',monospace; font-size:12px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;">kit</span></sc-if>
+            </div>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" style="position:absolute; top:29px; right:24px; color:{{ c.arrowColor }}; transform:{{ c.arrowT }}; transition:{{ c.trans }};"><path d="M1 13L13 1M3.5 1H13V10.5"></path></svg>
+            <div style="margin-top:20px; font-size:20px; font-weight:500; line-height:1.25; letter-spacing:-0.01em; padding-right:24px;">{{ c.title }}</div>
+            <div style="margin-top:8px; max-width:56ch; height:67.5px; overflow:hidden; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3; font-size:15px; line-height:1.5; color:#8C8A86; text-wrap:pretty;">{{ c.desc }}</div>
+            <div style="position:relative; margin-top:24px; height:133px; overflow:hidden; font-family:'Geist Mono',monospace; font-size:13px; line-height:19px;">
+              <sc-for list="{{ c.lines }}" as="ln" hint-placeholder-count="5">
+                <div style="display:flex; align-items:center; gap:8px; height:19px; white-space:pre; overflow:hidden; color:{{ ln.color }};">
+                  <sc-if value="{{ ln.x }}"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.4" style="flex:none;"><path d="M1 1l7 7M8 1L1 8"></path></svg></sc-if>
+                  <sc-if value="{{ ln.ok }}"><svg width="10" height="9" viewBox="0 0 10 9" fill="none" stroke="currentColor" stroke-width="1.4" style="flex:none;"><path d="M1 4.8L3.8 7.6L9 1.2"></path></svg></sc-if>
+                  <span style="overflow:hidden;">{{ ln.t }}</span>
+                </div>
+              </sc-for>
+              <div style="position:absolute; left:0; right:0; top:0; height:200px; background:{{ c.fade }}; transform:{{ c.fadeT }}; transition:{{ c.trans }};"></div>
+              <div style="position:absolute; top:0; right:0; bottom:0; width:48px; background:{{ c.fadeR }}; transition:{{ c.trans }};"></div>
+            </div>
+            <div style="margin-top:auto; padding-top:24px; display:flex; flex-direction:column; gap:4px; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">
+              <span>khalid · @khalerdameen</span>
+              <span>{{ c.tools }}</span>
+            </div>
+          </a>
+        </sc-for>
+
+        <sc-if value="{{ showSubmit }}" hint-placeholder-val="{{ true }}">
+          <a href="#" onClick="{{ noop }}" onMouseEnter="{{ submit.onEnter }}" onMouseLeave="{{ submit.onLeave }}" style="position:relative; z-index:1; grid-column:{{ submitSpan }}; margin:-1px 0 0 -1px; display:flex; flex-direction:column; padding:{{ pad }}px; min-height:{{ submitMinH }}px; border:1px dashed rgba(255,255,255,0.24); color:#EDEBE7; background:{{ submit.bg }}; transition:{{ submit.trans }};" style-focus="outline:2px solid #FF5B1F; outline-offset:2px; z-index:3;">
+            <div style="height:24px;"></div>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" style="position:absolute; top:29px; right:24px; color:{{ submit.arrowColor }}; transform:{{ submit.arrowT }}; transition:{{ submit.trans }};"><path d="M1 13L13 1M3.5 1H13V10.5"></path></svg>
+            <div style="margin-top:20px; font-size:20px; font-weight:500; line-height:1.25; letter-spacing:-0.01em;">your context here</div>
+            <div style="margin-top:8px; max-width:30ch; font-size:15px; line-height:1.5; color:#8C8A86; text-wrap:pretty;">built something good? submit the file behind it.</div>
+          </a>
+        </sc-if>
+        <sc-for list="{{ fillers }}" as="fl" hint-placeholder-count="0">
+          <div style="border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);"></div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:{{ footGap }}px; border-top:1px solid rgba(255,255,255,0.08); padding:12px {{ barPad }}px 12px {{ padX }}px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 16px; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">
+        <span style="padding:14px 0; line-height:1.5;">context labs · made by khalid · submissions open · cc by 4.0</span>
+        <div style="display:flex; align-items:center; margin-left:{{ footLinksShift }}px;">
+          <a href="#" onClick="{{ noop }}" style="display:flex; align-items:center; gap:6px; height:44px; padding:0 14px; color:#8C8A86;">submit <svg width="9" height="9" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 13L13 1M3.5 1H13V10.5"></path></svg></a>
+          <a href="#" onClick="{{ noop }}" style="display:flex; align-items:center; gap:6px; height:44px; padding:0 14px; color:#8C8A86;">x <svg width="9" height="9" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 13L13 1M3.5 1H13V10.5"></path></svg></a>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute; inset:0; z-index:50; pointer-events:none; opacity:0.06; background-image:{{ grain }};"></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;width&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:null,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Frame&quot;},&quot;viewportHeight&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:null,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Frame&quot;},&quot;scrollToFilters&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Frame&quot;},&quot;forceHover&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;State&quot;},&quot;initialType&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;all&quot;,&quot;kit&quot;,&quot;skill&quot;,&quot;context&quot;],&quot;default&quot;:&quot;all&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;State&quot;}}">
+const ENTRIES = [
+  { id: 'mobile-kit', type: 'kit', title: 'Mobile App Kit', tools: 'claude code · claude app',
+    desc: 'Scans your app or interviews you, then writes the CONTEXT.md every design and build prompt reads from.',
+    lines: ['## Tokens', '| Accent | #C41E3A | stars, active nav, 1 primary | code (47×) + you |', '## Rules', '- Radius: 8 / 14 / 20 / 28 / full. Nothing else.   [you]', '- Spacing: 4pt base. Screen margin 20.            [code]', '- One primary action per screen.                  [you]', '- Tab bar: 4 items, labels always visible.        [code]'] },
+  { id: 'website-kit', type: 'kit', title: 'Website Kit', tools: 'claude design · claude code',
+    desc: "Brief, direction and rules for a site that doesn't look like every other landing page.",
+    lines: ['## Refused defaults', '- warm paper + serif headline with one italic word', '- pill → hero → logos → bento → pricing → FAQ', '## One job', 'Visitor understands the product and acts in 10 seconds.', '## Direction', '- one accent, used for the primary action only'] },
+  { id: 'context', type: 'skill', title: 'context', tools: 'claude code · claude app',
+    desc: "Create, extract or update your project's CONTEXT.md with pop-up questions. No file editing.",
+    lines: ['---', 'name: context', 'description: Builds and maintains', '  CONTEXT.md. Use when someone says "set up context"…', '---', '1. Scan the repo for tokens, components, copy', '2. Ask only what the code can\'t answer'] },
+  { id: 'handoff', type: 'skill', title: 'handoff', tools: 'claude design · claude code',
+    desc: 'Writes the right prompt for the next tool: Claude Design, Claude Code plan mode, or an artifact.',
+    lines: ['[PREAMBLE — Product, Direction, Tokens, Rules]', '[THIS PASS — 3 screens]', '[CHECK BEFORE ACCEPTING — 7 rules]', '', 'target: claude design', 'pass: 1 of 6', 'preamble: repeated verbatim every pass'] },
+  { id: 'review', type: 'skill', title: 'review', tools: 'claude app · claude code',
+    desc: 'Checks screenshots against your context and writes a narrow fix prompt.',
+    lines: ['✕ Accent appears 3× on Today (rule: 1)', '✕ Label 9px from pill edge (rule: 14px)', '✓ Timeline density', '✓ Tab bar labels visible', '✕ Card radius 12 (allowed: 8 / 14 / 20)', '', 'fix prompt → 3 changes, 1 screen'] },
+  { id: 'motion', type: 'skill', title: 'Deterministic Motion', tools: 'claude code',
+    desc: 'GSAP timelines that scrub, seek and loop without drifting. For effects that must look the same every frame.',
+    lines: ['timeline.pause().seek(t) // finite, seek-safe', 'no Math.random() in render', 'duration: fixed, never derived from DOM', 'repeat: -1 only with a fixed cycle length', 'ease: named, never computed per frame', 'seed: passed in, logged with the export', 'test: seek(0) → seek(end) → seek(0)'] },
+  { id: 'about', type: 'context', title: 'About Me', tools: 'claude app',
+    desc: 'Who you are, how you work, your standards. Set it once, every chat starts knowing you.',
+    lines: ['## Voice', '- lowercase, no emojis, short declaratives', '## Standards', '- one primary action per screen', '- ship the small version first', '## Stack', '- next.js, tailwind, claude code'] },
+  { id: 'ios', type: 'context', title: 'iOS App Review', tools: 'claude code',
+    desc: 'What gets apps rejected, as rules your agent checks before you submit.',
+    lines: ['- Sign in with Apple equal to Google if any social login', '- Account deletion reachable in-app', '- Purpose string for every permission', '- Restore purchases visible on the paywall', '- No placeholder content in the review build', '- Privacy manifest lists every tracking domain', '- Demo account in review notes if login is required'] },
+  { id: 'passplan', type: 'context', title: 'Claude Design Pass Plan', tools: 'claude design',
+    desc: 'How to feed a big design to Claude Design in passes instead of all at once.',
+    lines: ['Pass 1: the 3 screens that decide the direction', 'Pass 2–6: one screen group each, same preamble', '', 'every pass:', '  preamble (verbatim) + this pass + checks', '  approve before sending the next', '  never fix two screens in one prompt'] },
+  { id: 'pitch', type: 'context', title: 'Pitch Deck', tools: 'claude app',
+    desc: 'Story, proof and numbers rules for a deck investors actually finish.',
+    lines: ['## Claims', '- only numbers you can source', '## Slide 1', 'The problem in one sentence a stranger gets', '## Slide 2', 'Who has it, how often, what it costs them', '## Ask'] },
+  { id: 'brand', type: 'context', title: 'Brand Identity', tools: 'claude design · claude app',
+    desc: 'Mark, type and colour decisions with the reasons written down.',
+    lines: ['## Mark', '- must survive 16px', '## Refused', "- the category's default colour", '## Type', '- one family, two weights', '- reason: reads at 11px on a receipt'] },
+  { id: 'planmode', type: 'context', title: 'Plan Mode Prompt', tools: 'claude code',
+    desc: 'The prompt shape that makes Claude Code plan before it touches a file.',
+    lines: ['Read CONTEXT.md first.', "PLAN FIRST. Don't write code until I approve.", 'Flag conflicts with the stack.', "List every file you'll touch, and why.", 'Stop after the plan. Wait for "go".', '', 'then: one file per step, run tests'] },
+];
+const BRIGHT = /^(#|---|\[|✕|Pass |Read |PLAN|timeline|name:)/;
+const GRAIN = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")`;
+const TYPES = [['all', 'All'], ['kit', 'Kits'], ['skill', 'Skills'], ['context', 'Context']];
+const TOOLS = [['claude app', 'Claude app'], ['claude code', 'Claude Code'], ['claude design', 'Claude Design']];
+const fadeFor = bg => `linear-gradient(to bottom, ${bg}00 0px, ${bg}00 57px, ${bg} 95px, ${bg} 100%)`;
+
+class Component extends DCLogic {
+  state = { type: this.props.initialType ?? 'all', tool: null, hover: null, mw: 1440 };
+  rootRef = React.createRef();
+  filterRef = React.createRef();
+  barRef = React.createRef();
+  noop = e => e.preventDefault();
+
+  componentDidMount() {
+    this.rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const el = this.rootRef.current;
+    if (this.props.width == null && el && window.ResizeObserver) {
+      this.ro = new ResizeObserver(e => this.setState({ mw: e[0].contentRect.width }));
+      this.ro.observe(el);
+    }
+    if (this.props.scrollToFilters) {
+      let n = 0;
+      this.scrollTimer = setInterval(() => { this.goScroll(); if (++n > 30) clearInterval(this.scrollTimer); }, 100);
+      document.fonts && document.fonts.ready.then(() => this.goScroll());
+    }
+    this.forceUpdate();
+  }
+  goScroll() {
+    const el = this.rootRef.current, f = this.filterRef.current, b = this.barRef.current;
+    if (!el || !f) return;
+    const hc = this.props.forceHover && el.querySelector(`[data-id="${this.props.forceHover}"]`);
+    const target = hc ? hc.offsetTop - (b ? b.offsetHeight : 0) - 24 : f.offsetTop - (b ? b.offsetHeight : 0);
+    if (target > 0 && Math.abs(el.scrollTop - target) > 1) el.scrollTop = target;
+  }
+  componentDidUpdate() { if (this.props.scrollToFilters) this.goScroll(); }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); clearInterval(this.scrollTimer); }
+
+  hoverProps(id) {
+    return {
+      onEnter: () => this.setState({ hover: id }),
+      onLeave: () => this.setState(s => (s.hover === id ? { hover: null } : null)),
+    };
+  }
+
+  renderVals() {
+    const w = this.props.width ?? this.state.mw;
+    const bp = w >= 1024 ? 'd' : w >= 600 ? 't' : 'm';
+    const cols = { d: 4, t: 2, m: 1 }[bp];
+    const pad = bp === 'm' ? 20 : 24;
+    const hov = this.props.forceHover || this.state.hover;
+    const trans = this.rm ? 'none' : 'transform 200ms ease-out, background-color 200ms ease-out';
+    const { type, tool } = this.state;
+    const list = ENTRIES.filter(e => (type === 'all' || e.type === type) && (!tool || e.tools.includes(tool)));
+    const kitSpan = Math.min(2, cols);
+    const units = list.reduce((s, e) => s + (e.type === 'kit' ? kitSpan : 1), 0) + kitSpan;
+    const fill = (cols - (units % cols)) % cols;
+    const look = on => {
+      const bg = on ? '#141517' : '#0E0F10';
+      return { bg, fade: fadeFor(bg), fadeR: `linear-gradient(to right, ${bg}00, ${bg})`, arrowColor: on ? '#FF5B1F' : '#8C8A86', arrowT: on ? 'translate(4px,-4px)' : 'none', fadeT: on ? 'translateY(38px)' : 'none', trans };
+    };
+    const cards = list.map(e => ({
+      ...e, ...look(hov === e.id), ...this.hoverProps(e.id), pad, noop: this.noop,
+      isKit: e.type === 'kit', isSkill: e.type === 'skill', isContext: e.type === 'context',
+      span: e.type === 'kit' ? `span ${kitSpan}` : 'span 1',
+      lines: e.lines.map(l => {
+        const x = l.startsWith('✕ '), ok = l.startsWith('✓ ');
+        return { t: x || ok ? l.slice(2) : l, x, ok, color: BRIGHT.test(l) ? '#EDEBE7' : '#8C8A86' };
+      }),
+    }));
+    const vh = this.props.viewportHeight;
+    return {
+      rootRef: this.rootRef, filterRef: this.filterRef, barRef: this.barRef, noop: this.noop,
+      rootH: vh ? vh + 'px' : 'auto', rootOverflow: vh ? 'auto' : 'visible',
+      isMobile: bp === 'm', isWide: bp !== 'm',
+      margin: { d: 40, t: 24, m: 16 }[bp], padX: pad, barPad: pad - 14, filterPad: pad - 14,
+      display: { d: 72, t: 64, m: 44 }[bp],
+      heroPadT: { d: 88, t: 72, m: 48 }[bp], heroPadB: { d: 56, t: 48, m: 40 }[bp],
+      footGap: bp === 'm' ? 64 : 96, footLinksShift: bp === 'm' ? -14 : 0,
+      gridCols: `repeat(${cols}, minmax(0, 1fr))`,
+      pad, submitSpan: `span ${kitSpan}`, submitMinH: bp === 'm' ? 220 : 320,
+      cards, showSubmit: true,
+      submit: { ...look(hov === 'submit'), ...this.hoverProps('submit') },
+      fillers: Array.from({ length: fill }, (_, i) => ({ k: i })),
+      typeFilters: TYPES.map(([k, label]) => ({ label, active: type === k, color: type === k ? '#FF5B1F' : '#8C8A86', onClick: () => this.setState({ type: k }) })),
+      toolFilters: TOOLS.map(([k, label]) => ({ label, active: tool === k, color: tool === k ? '#FF5B1F' : '#8C8A86', onClick: () => this.setState(s => ({ tool: s.tool === k ? null : k })) })),
+      grain: GRAIN,
+    };
+  }
+}
+</script>
+</body>
+</html>

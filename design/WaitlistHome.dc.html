@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#0E0F10}a{color:#EDEBE7;text-decoration:none}a:hover{color:#EDEBE7}input::placeholder{color:#8C8A86}</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative; background:#0E0F10; color:#EDEBE7; font-family:'Geist',system-ui,sans-serif; -webkit-font-smoothing:antialiased;">
+  <div style="position:relative; padding:0 {{ margin }}px;">
+    <div style="border-left:1px solid rgba(255,255,255,0.08); border-right:1px solid rgba(255,255,255,0.08);">
+      <dc-import name="CLTopBar" bp="{{ bp }}" style="position:sticky; top:0; z-index:20; display:block;" hint-size="100%,64px"></dc-import>
+
+      <div style="padding:{{ heroPadT }}px {{ padX }}px {{ heroPadB }}px; border-bottom:1px solid rgba(255,255,255,0.08);">
+        <h1 style="margin:0; font-size:{{ display }}px; line-height:1.1; letter-spacing:-0.02em; font-weight:500; text-wrap:balance;">the context behind good ai work.</h1>
+        <p style="margin:20px 0 0; max-width:52ch; font-size:15px; line-height:1.5; color:#8C8A86; text-wrap:pretty;">context files and skills from people who build. take one, install it, stop getting generic output.</p>
+        <sc-if value="{{ isForm }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ onSubmit }}" style="margin-top:28px; max-width:520px; display:flex; flex-direction:{{ formDir }}; gap:{{ formGap }}px;">
+            <input type="email" value="{{ email }}" onChange="{{ onEmail }}" placeholder="you@email.com" aria-label="email" style="flex:1; min-width:0; height:48px; box-sizing:border-box; padding:0 16px; background:#0E0F10; border:1px solid rgba(255,255,255,0.2); border-right-color:{{ inputRightBorder }}; border-radius:0; color:#EDEBE7; font-family:'Geist',sans-serif; font-size:15px; outline:none;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">
+            <button type="submit" style="flex:none; height:48px; padding:0 24px; background:#FF5B1F; color:#0E0F10; border:0; border-radius:0; font-family:'Geist',sans-serif; font-size:15px; font-weight:500; cursor:pointer;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">get early access</button>
+          </form>
+        </sc-if>
+        <sc-if value="{{ isDone }}">
+          <div style="margin-top:28px; min-height:48px; display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; line-height:1.5; color:#EDEBE7;">
+            <span style="flex:none; width:10px; height:10px; box-sizing:border-box; border:1px solid #EDEBE7; display:flex; align-items:center; justify-content:center;"><span style="width:4px; height:4px; background:#EDEBE7;"></span></span>
+            <span>you're in. first drawers open soon.</span>
+          </div>
+        </sc-if>
+        <div style="margin-top:24px; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">opening with 12 entries · free · cc by</div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:{{ gridCols }}; margin-right:-1px;">
+        <sc-for list="{{ cards }}" as="c" hint-placeholder-count="3">
+          <div style="grid-column:{{ c.span }}; min-width:0; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);">
+            <dc-import name="CLCard" entry-id="{{ c.id }}" bp="{{ c.bp }}" hint-size="100%,436px"></dc-import>
+          </div>
+        </sc-for>
+        <sc-for list="{{ locked }}" as="l" hint-placeholder-count="8">
+          <div style="min-height:{{ l.h }}px; padding:{{ l.pad }}px; box-sizing:border-box; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:flex-start;">
+            <div style="height:24px; display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">
+              <span style="flex:none; width:10px; height:10px; box-sizing:border-box; border:1px solid #8C8A86;"></span>
+              <span>drawer {{ l.n }} — opens at launch</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:{{ footGap }}px;"><dc-import name="CLFooter" bp="{{ bp }}" hint-size="100%,72px"></dc-import></div>
+    </div>
+    <div style="position:absolute; inset:0; z-index:50; pointer-events:none; opacity:0.06; background-image:{{ grain }};"></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;width&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:null,&quot;tsType&quot;:&quot;number&quot;},&quot;success&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const GRAIN = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")`;
+class Component extends DCLogic {
+  state = { mw: 1440, email: '', done: !!this.props.success };
+  rootRef = React.createRef();
+  componentDidMount() {
+    const el = this.rootRef.current;
+    if (this.props.width == null && el && window.ResizeObserver) {
+      this.ro = new ResizeObserver(e => this.setState({ mw: e[0].contentRect.width }));
+      this.ro.observe(el);
+    }
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  renderVals() {
+    const w = this.props.width ?? this.state.mw;
+    const bp = w >= 1024 ? 'd' : w >= 600 ? 't' : 'm';
+    const isM = bp === 'm';
+    const cols = { d: 4, t: 2, m: 1 }[bp];
+    const lockedCount = isM ? 3 : cols * 3 - 4;
+    return {
+      bp, rootRef: this.rootRef, grain: GRAIN,
+      margin: { d: 40, t: 24, m: 16 }[bp], padX: isM ? 20 : 24,
+      display: { d: 72, t: 64, m: 44 }[bp],
+      heroPadT: { d: 88, t: 72, m: 48 }[bp], heroPadB: { d: 56, t: 48, m: 40 }[bp],
+      footGap: isM ? 64 : 96,
+      isForm: !this.state.done, isDone: this.state.done,
+      formDir: isM ? 'column' : 'row', formGap: isM ? 8 : 0, inputRightBorder: isM ? 'rgba(255,255,255,0.2)' : 'transparent',
+      email: this.state.email, onEmail: e => this.setState({ email: e.target.value }),
+      onSubmit: e => { e.preventDefault(); this.setState({ done: true }); },
+      gridCols: `repeat(${cols}, minmax(0,1fr))`,
+      cards: [['mobile-kit', 2], ['context', 1], ['handoff', 1]].map(([id, s]) => ({ id, bp, span: `span ${Math.min(s, cols)}` })),
+      locked: Array.from({ length: lockedCount }, (_, i) => ({ n: String(i + 4).padStart(2, '0'), h: isM ? 160 : 436, pad: isM ? 20 : 24 })),
+    };
+  }
+}
+</script>
+</body>
+</html>

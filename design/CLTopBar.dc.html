@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 {{ barPad }}px 0 {{ padX }}px; background:#0E0F10; border-bottom:1px solid rgba(255,255,255,0.08); font-family:'Geist',system-ui,sans-serif; color:#EDEBE7; box-sizing:border-box;">
+  <a href="#" onClick="{{ noop }}" style="display:flex; align-items:center; gap:10px; min-height:44px; font-size:18px; font-weight:500; letter-spacing:-0.01em; color:#EDEBE7; text-decoration:none;">
+    <span style="width:10px; height:10px; box-sizing:border-box; border:1px solid #EDEBE7; display:flex; align-items:center; justify-content:center;"><span style="width:4px; height:4px; background:#EDEBE7;"></span></span>
+    <span>context labs</span>
+  </a>
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex; align-items:center;">
+      <sc-if value="{{ showSubmit }}"><a href="#" onClick="{{ noop }}" style="display:flex; align-items:center; height:44px; padding:0 14px; font-size:14px; color:#EDEBE7; text-decoration:none;">submit</a></sc-if>
+      <button onClick="{{ onMenuClick }}" aria-label="{{ menuLabel }}" style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:none; border:0; padding:0; color:#EDEBE7; cursor:pointer;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">
+        <sc-if value="{{ showBurger }}"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h14M3 13h14"></path></svg></sc-if>
+        <sc-if value="{{ showClose }}"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l10 10M15 5L5 15"></path></svg></sc-if>
+      </button>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isWide }}" hint-placeholder-val="{{ true }}">
+    <nav style="display:flex; align-items:center;">
+      <sc-for list="{{ links }}" as="l" hint-placeholder-count="3">
+        <a href="#" onClick="{{ l.noop }}" style="display:flex; align-items:center; height:44px; padding:0 14px; font-size:14px; text-decoration:none; color:{{ l.color }};" style-hover="color:#EDEBE7;">{{ l.label }}</a>
+      </sc-for>
+    </nav>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:64},&quot;bp&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;d&quot;,&quot;t&quot;,&quot;m&quot;],&quot;default&quot;:&quot;d&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;browse&quot;,&quot;submit&quot;,&quot;about&quot;],&quot;default&quot;:&quot;browse&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;menuOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onMenu&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  noop = e => e.preventDefault();
+  renderVals() {
+    const bp = this.props.bp ?? 'd';
+    const pad = bp === 'm' ? 20 : 24;
+    const active = this.props.active;
+    const open = !!this.props.menuOpen;
+    return {
+      noop: this.noop, padX: pad, barPad: pad - 14,
+      isMobile: bp === 'm', isWide: bp !== 'm',
+      showSubmit: !open, showBurger: !open, showClose: open, menuLabel: open ? 'close menu' : 'menu',
+      onMenuClick: e => { e.preventDefault(); this.props.onMenu && this.props.onMenu(); },
+      links: ['browse', 'submit', 'about'].map(label => ({ label, noop: this.noop, color: active === label ? '#EDEBE7' : '#8C8A86' })),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#0E0F10}a{color:#EDEBE7;text-decoration:none}a:hover{color:#EDEBE7}</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative; background:#0E0F10; color:#EDEBE7; font-family:'Geist',system-ui,sans-serif; -webkit-font-smoothing:antialiased; height:{{ rootH }}; overflow-y:{{ rootOverflow }};">
+  <div style="position:relative; padding:0 {{ margin }}px; min-height:100%;">
+    <div style="border-left:1px solid rgba(255,255,255,0.08); border-right:1px solid rgba(255,255,255,0.08);">
+      <dc-import name="CLTopBar" bp="{{ bp }}" active="browse" style="position:sticky; top:0; z-index:20; display:block;" hint-size="100%,64px"></dc-import>
+
+      <div style="max-width:1200px; margin:0 auto; border-left:1px solid {{ cb }}; border-right:1px solid {{ cb }};">
+
+        <header style="padding:{{ headPadT }}px {{ padX }}px {{ secPadY }}px; border-bottom:1px solid rgba(255,255,255,0.08);">
+          <nav style="display:flex; align-items:center; flex-wrap:wrap; gap:0 10px; min-height:44px; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">
+            <a href="#" onClick="{{ noop }}" style="display:flex; align-items:center; height:44px; color:#8C8A86;" style-hover="color:#EDEBE7;">browse</a>
+            <span>/</span>
+            <a href="#" onClick="{{ noop }}" style="display:flex; align-items:center; height:44px; color:#8C8A86;" style-hover="color:#EDEBE7;">{{ p.crumb }}</a>
+            <span>/</span>
+            <span style="color:#EDEBE7;">{{ p.crumbLast }}</span>
+          </nav>
+          <div style="margin-top:20px; height:24px; display:flex; align-items:center;">
+            <sc-if value="{{ isContextType }}"><span style="display:inline-flex; align-items:center; height:24px; box-sizing:border-box; padding:0 14px; border:1px solid #EDEBE7; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">context</span></sc-if>
+            <sc-if value="{{ isSkillType }}"><span style="display:inline-flex; align-items:center; height:24px; padding:0 14px; background:#EDEBE7; color:#0E0F10; font-family:'Geist Mono',monospace; font-size:12px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;">skill</span></sc-if>
+            <sc-if value="{{ isKitType }}"><span style="display:inline-flex; align-items:center; height:24px; margin-left:3px; padding:0 14px; background:#EDEBE7; color:#0E0F10; outline:1px solid #EDEBE7; outline-offset:2px; font-family:'Geist Mono',monospace; font-size:12px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;">kit</span></sc-if>
+          </div>
+          <h1 style="margin:24px 0 0; font-size:{{ pageTitle }}px; line-height:1.1; letter-spacing:-0.02em; font-weight:500;">{{ p.title }}</h1>
+          <p style="margin:16px 0 0; max-width:60ch; font-size:15px; line-height:1.5; color:#EDEBE7; text-wrap:pretty;">{{ p.desc }}</p>
+          <div style="margin-top:20px; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86; line-height:1.6;">{{ p.meta }}</div>
+          <div style="margin-top:20px; display:flex; flex-wrap:wrap; align-items:center; gap:8px;">
+            <span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86; margin-right:6px;">works with</span>
+            <sc-for list="{{ p.works }}" as="w" hint-placeholder-count="3">
+              <span style="display:inline-flex; align-items:center; height:36px; padding:0 14px; box-sizing:border-box; border:1px solid rgba(255,255,255,0.2); font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">{{ w }}</span>
+            </sc-for>
+          </div>
+        </header>
+
+        <div style="display:grid; grid-template-columns:{{ splitCols }}; align-items:start;">
+
+          <aside style="order:{{ railOrder }}; position:{{ railPos }}; top:{{ railTop }}; display:grid; grid-template-columns:{{ railCols }}; border-bottom:1px solid {{ railBorderB }};">
+            <sc-if value="{{ showButtons }}">
+              <div style="order:0; display:flex; flex-direction:{{ btnDir }}; gap:12px; padding:{{ padX }}px; border-right:1px solid {{ railBtnBorderR }};">
+                <sc-if value="{{ showPrimaryInRail }}">
+                  <button onClick="{{ onPrimary }}" style="height:48px; padding:0 20px; display:flex; align-items:center; justify-content:center; gap:10px; background:#FF5B1F; color:#0E0F10; border:0; border-radius:0; font-family:{{ primaryFont }}; font-size:15px; font-weight:500; cursor:pointer; white-space:nowrap;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">{{ primaryLabel }}</button>
+                </sc-if>
+                <sc-if value="{{ hasSecondary }}">
+                  <button onClick="{{ onSecondary }}" style="height:48px; padding:0 20px; display:flex; align-items:center; justify-content:center; background:none; color:#EDEBE7; border:1px solid #EDEBE7; border-radius:0; font-family:'Geist',sans-serif; font-size:15px; font-weight:500; cursor:pointer; white-space:nowrap;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">{{ secondaryLabel }}</button>
+                </sc-if>
+              </div>
+            </sc-if>
+            <div style="order:{{ tryOrder }}; padding:{{ padX }}px; border-top:1px solid {{ tryBorderT }};">
+              <div style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">try it</div>
+              <div style="margin-top:12px; padding:14px 16px; background:#141517; font-family:'Geist Mono',monospace; font-size:14px; line-height:1.45; color:#EDEBE7;">› {{ p.tryIt }}</div>
+            </div>
+            <div style="order:{{ factsOrder }}; grid-column:1 / -1; display:grid; grid-template-columns:{{ factsCols }}; margin-right:-1px;">
+              <sc-for list="{{ p.facts }}" as="f" hint-placeholder-count="4">
+                <div style="display:flex; flex-direction:{{ factDir }}; justify-content:space-between; gap:6px 16px; padding:14px {{ padX }}px; border-top:1px solid rgba(255,255,255,0.08); border-right:1px solid rgba(255,255,255,0.08);">
+                  <span style="flex:none; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86; line-height:19px;">{{ f.k }}</span>
+                  <span style="font-family:'Geist Mono',monospace; font-size:13px; line-height:19px; color:#EDEBE7; text-align:{{ factAlign }};">{{ f.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </aside>
+
+          <main style="order:1; min-width:0; border-right:1px solid {{ mainBorderR }};">
+
+            <sc-if value="{{ isKit }}">
+              <section data-anchor="how" style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">01</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">how it works</h2></div>
+                <div style="display:grid; grid-template-columns:{{ howCols }}; border-top:1px solid rgba(255,255,255,0.08); margin:0 -1px -1px 0;">
+                  <sc-for list="{{ how }}" as="h" hint-placeholder-count="4">
+                    <div style="padding:{{ padX }}px; min-height:{{ howMinH }}px; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08); display:flex; flex-direction:column;">
+                      <span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; color:#8C8A86;">{{ h.n }}</span>
+                      <span style="margin-top:{{ howGap }}px; font-size:20px; font-weight:500; letter-spacing:-0.01em;">{{ h.t }}</span>
+                      <span style="margin-top:8px; font-size:15px; line-height:1.5; color:#8C8A86; text-wrap:pretty;">{{ h.d }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </section>
+
+              <section data-anchor="see" style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">02</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">what you'll see</h2></div>
+                <div style="padding:0 {{ padX }}px {{ secPadY }}px;">
+                  <div style="max-width:560px; background:#141517; border:1px solid rgba(255,255,255,0.2);">
+                    <div style="display:flex; align-items:center; justify-content:space-between; height:48px; padding:0 20px; border-bottom:1px solid rgba(255,255,255,0.08); font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;"><span>claude is asking · 2 questions</span><span>1 / 2</span></div>
+                    <div style="padding:20px 20px 16px; font-size:17px; font-weight:500; line-height:1.35;">I found 3 reds in your code. Which is the accent?</div>
+                    <sc-for list="{{ q1 }}" as="o" hint-placeholder-count="4">
+                      <button onClick="{{ o.onClick }}" style="width:100%; min-height:48px; display:flex; align-items:center; gap:14px; padding:10px 20px; box-sizing:border-box; background:{{ o.bg }}; border:0; border-top:1px solid rgba(255,255,255,0.08); color:#EDEBE7; text-align:left; cursor:pointer; font-family:'Geist',sans-serif; font-size:14px;" style-focus="outline:2px solid #FF5B1F; outline-offset:-2px;">
+                        <span style="flex:none; width:16px; height:16px; box-sizing:border-box; border:1px solid {{ o.ring }}; display:flex; align-items:center; justify-content:center;"><span style="width:8px; height:8px; background:{{ o.dot }};"></span></span>
+                        <sc-if value="{{ o.hasSwatch }}"><span style="flex:none; width:14px; height:14px; background:{{ o.sw }};"></span></sc-if>
+                        <span style="display:flex; flex-wrap:wrap; gap:2px 8px; align-items:baseline;"><span style="font-family:'Geist Mono',monospace; font-size:13px;">{{ o.a }}</span><span style="color:#8C8A86;">{{ o.b }}</span></span>
+                      </button>
+                    </sc-for>
+                    <div style="padding:20px 20px 16px; border-top:1px solid rgba(255,255,255,0.2); font-size:17px; font-weight:500; line-height:1.35;">Where should the accent be allowed?</div>
+                    <sc-for list="{{ q2 }}" as="o" hint-placeholder-count="5">
+                      <button onClick="{{ o.onClick }}" style="width:100%; min-height:48px; display:flex; align-items:center; gap:14px; padding:10px 20px; box-sizing:border-box; background:none; border:0; border-top:1px solid rgba(255,255,255,0.08); color:#EDEBE7; text-align:left; cursor:pointer; font-family:'Geist',sans-serif; font-size:14px;" style-focus="outline:2px solid #FF5B1F; outline-offset:-2px;">
+                        <span style="flex:none; width:16px; height:16px; box-sizing:border-box; border:1px solid {{ o.ring }}; background:{{ o.fill }}; display:flex; align-items:center; justify-content:center; color:#0E0F10;"><sc-if value="{{ o.on }}"><svg width="10" height="9" viewBox="0 0 10 9" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 4.8L3.8 7.6L9 1.2"></path></svg></sc-if></span>
+                        <span>{{ o.label }}</span>
+                      </button>
+                    </sc-for>
+                    <div style="display:flex; justify-content:flex-end; gap:8px; padding:12px 20px; border-top:1px solid rgba(255,255,255,0.08);">
+                      <button onClick="{{ noop }}" style="height:48px; padding:0 16px; background:none; border:0; color:#8C8A86; font-family:'Geist',sans-serif; font-size:15px; cursor:pointer;">skip</button>
+                      <button onClick="{{ noop }}" style="height:48px; padding:0 20px; background:none; border:1px solid #EDEBE7; color:#EDEBE7; font-family:'Geist',sans-serif; font-size:15px; font-weight:500; cursor:pointer;">submit answers</button>
+                    </div>
+                  </div>
+                  <p style="margin:16px 0 0; font-size:15px; line-height:1.5; color:#8C8A86;">options come from your own code, not a template.</p>
+                </div>
+              </section>
+
+              <section data-anchor="get" style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">03</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">what you get</h2></div>
+                <div style="display:grid; grid-template-columns:{{ getCols }}; border-top:1px solid rgba(255,255,255,0.08); margin:0 -1px -1px 0;">
+                  <div style="padding:{{ padX }}px; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);">
+                    <div style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">a one-line prompt</div>
+                    <div style="margin-top:20px; font-family:'Geist Mono',monospace; font-size:15px; line-height:1.45;">› make my app look premium</div>
+                  </div>
+                  <div style="min-height:56px; display:flex; align-items:center; justify-content:center; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08); color:#8C8A86;">
+                    <svg width="20" height="12" viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="1.5" style="transform:{{ getArrowT }};"><path d="M0 6h18M13 1l5 5-5 5"></path></svg>
+                  </div>
+                  <div style="min-width:0; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);">
+                    <dc-import name="CLCodePanel" lines="{{ getLines }}" label="the context.md it writes" hint-size="100%,260px"></dc-import>
+                  </div>
+                </div>
+              </section>
+            </sc-if>
+
+            <sc-if value="{{ isSkill }}">
+              <section data-anchor="triggers" style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 12px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">01</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">triggers</h2></div>
+                <p style="margin:0; padding:0 {{ padX }}px 28px; font-size:15px; line-height:1.5; color:#8C8A86;">it switches on when you say:</p>
+                <sc-for list="{{ triggers }}" as="t" hint-placeholder-count="3">
+                  <div style="padding:18px {{ padX }}px; border-top:1px solid rgba(255,255,255,0.08); font-family:'Geist Mono',monospace; font-size:15px; line-height:1.45;">› {{ t }}</div>
+                </sc-for>
+              </section>
+
+              <section data-anchor="prompts" style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">02</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">one context, three prompts</h2></div>
+                <div style="display:grid; grid-template-columns:{{ promptsCols }}; border-top:1px solid rgba(255,255,255,0.08); margin-right:-1px;">
+                  <sc-for list="{{ prompts }}" as="pr" hint-placeholder-count="3">
+                    <div style="min-width:0; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);">
+                      <dc-import name="CLCodePanel" lines="{{ pr.lines }}" label="{{ pr.label }}" wrap="{{ true }}" hint-size="100%,240px"></dc-import>
+                    </div>
+                  </sc-for>
+                </div>
+                <p style="margin:0; padding:20px {{ padX }}px {{ secPadY }}px; font-size:15px; line-height:1.5; color:#8C8A86;">what each tool doesn't need is left out on purpose.</p>
+              </section>
+            </sc-if>
+
+            <sc-if value="{{ isContext }}">
+              <section data-anchor="rules" style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">01</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">rules, then applied</h2></div>
+                <div style="padding:0 {{ padX }}px 24px;">
+                  <div role="tablist" style="display:inline-flex; border:1px solid rgba(255,255,255,0.2);">
+                    <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2">
+                      <button onClick="{{ m.onClick }}" style="height:44px; padding:0 18px; border:0; background:{{ m.bg }}; color:{{ m.color }}; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">{{ m.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="border-top:1px solid rgba(255,255,255,0.08);">
+                  <dc-import name="CLCodePanel" lines="{{ ruleLines }}" label="{{ ruleLabel }}" hint-size="100%,300px"></dc-import>
+                </div>
+              </section>
+            </sc-if>
+
+            <section data-anchor="install" style="border-bottom:1px solid rgba(255,255,255,0.08);">
+              <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">{{ n.install }}</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">{{ p.installTitle }}</h2></div>
+              <div role="tablist" style="display:flex; overflow-x:auto; scrollbar-width:none; white-space:nowrap; padding:0 {{ tabPad }}px; border-top:1px solid rgba(255,255,255,0.08);">
+                <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="3">
+                  <button onClick="{{ tb.onClick }}" style="position:relative; flex:none; height:48px; padding:0 14px; background:none; border:0; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; color:{{ tb.color }};" style-focus="outline:2px solid #FF5B1F; outline-offset:-2px;">{{ tb.label }}<sc-if value="{{ tb.active }}"><span style="position:absolute; left:14px; right:14px; bottom:0; height:2px; background:{{ tabUnderline }};"></span></sc-if></button>
+                </sc-for>
+              </div>
+              <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+                <div style="display:flex; align-items:baseline; gap:24px; padding:20px {{ padX }}px; border-top:1px solid rgba(255,255,255,0.08);">
+                  <span style="flex:none; font-family:'Geist Mono',monospace; font-size:13px; color:#8C8A86;">{{ s.n }}</span>
+                  <span style="flex:1; min-width:0; font-size:15px; line-height:1.5;"><sc-for list="{{ s.parts }}" as="pt"><span style="font-family:{{ pt.font }}; font-size:{{ pt.size }}; background:{{ pt.bg }}; padding:{{ pt.pad }};">{{ pt.t }}</span></sc-for></span>
+                </div>
+              </sc-for>
+            </section>
+
+            <sc-if value="{{ hasInside }}">
+              <section data-anchor="inside" style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">{{ n.inside }}</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">what's inside</h2></div>
+                <div style="display:grid; grid-template-columns:{{ insideCols }}; border-top:1px solid rgba(255,255,255,0.08); margin:0 -1px -1px 0;">
+                  <sc-if value="{{ treeSide }}">
+                    <div style="padding:8px 0; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);">
+                      <sc-for list="{{ tree }}" as="it" hint-placeholder-count="6">
+                        <sc-if value="{{ it.isGroup }}"><div style="height:40px; display:flex; align-items:flex-end; padding:0 {{ padX }}px 6px; box-sizing:border-box; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">{{ it.label }}</div></sc-if>
+                        <sc-if value="{{ it.isFile }}"><button onClick="{{ it.onClick }}" style="width:100%; height:44px; display:flex; align-items:center; padding:0 14px 0 {{ it.indent }}px; box-sizing:border-box; background:{{ it.bg }}; border:0; color:{{ it.color }}; font-family:'Geist Mono',monospace; font-size:13px; text-align:left; cursor:pointer;" style-focus="outline:2px solid #FF5B1F; outline-offset:-2px;">{{ it.label }}</button></sc-if>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <div style="min-width:0; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);">
+                    <sc-if value="{{ treeDrop }}">
+                      <button onClick="{{ toggleTree }}" style="width:100%; height:52px; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 {{ padX }}px; box-sizing:border-box; background:none; border:0; border-bottom:1px solid rgba(255,255,255,0.08); color:#EDEBE7; font-family:'Geist Mono',monospace; font-size:13px; cursor:pointer;" style-focus="outline:2px solid #FF5B1F; outline-offset:-2px;">
+                        <span>{{ activeFile }}</span>
+                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.5" style="transform:{{ chevT }};"><path d="M1 1.5l5 5 5-5"></path></svg>
+                      </button>
+                      <sc-if value="{{ treeOpenNow }}">
+                        <div style="border-bottom:1px solid rgba(255,255,255,0.08); padding:4px 0;">
+                          <sc-for list="{{ treeFlat }}" as="it">
+                            <button onClick="{{ it.onClick }}" style="width:100%; height:44px; display:flex; align-items:center; padding:0 {{ padX }}px; box-sizing:border-box; background:{{ it.bg }}; border:0; color:{{ it.color }}; font-family:'Geist Mono',monospace; font-size:13px; text-align:left; cursor:pointer;">{{ it.path }}</button>
+                          </sc-for>
+                        </div>
+                      </sc-if>
+                    </sc-if>
+                    <dc-import name="CLCodePanel" lines="{{ fileLines }}" label="{{ activeFile }}" collapsed="{{ 14 }}" hint-size="100%,360px"></dc-import>
+                  </div>
+                </div>
+              </section>
+            </sc-if>
+
+            <sc-if value="{{ isKit }}">
+              <section data-anchor="keep" style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">06</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">keep it alive</h2></div>
+                <p style="margin:0; padding:0 {{ padX }}px {{ secPadY }}px; max-width:56ch; font-size:20px; line-height:1.45; text-wrap:pretty;">after a big change, type: <span style="font-family:'Geist Mono',monospace; font-size:17px; background:#141517; padding:2px 8px;">update my context</span>. it reads what changed and asks before writing.</p>
+              </section>
+            </sc-if>
+
+            <sc-if value="{{ isContext }}">
+              <section data-anchor="gen" style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">03</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">generate it instead</h2></div>
+                <a href="#" onClick="{{ noop }}" onMouseEnter="{{ genEnter }}" onMouseLeave="{{ genLeave }}" style="position:relative; display:block; padding:{{ padX }}px 72px {{ padX }}px {{ padX }}px; border-top:1px solid rgba(255,255,255,0.08); background:{{ gen.bg }}; transition:{{ gen.trans }}; color:#EDEBE7;" style-focus="outline:2px solid #FF5B1F; outline-offset:-2px;">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" style="position:absolute; top:29px; right:24px; color:{{ gen.arrowColor }}; transform:{{ gen.arrowT }}; transition:{{ gen.trans }};"><path d="M1 13L13 1M3.5 1H13V10.5"></path></svg>
+                  <span style="display:block; max-width:44ch; font-size:20px; line-height:1.4; font-weight:500; letter-spacing:-0.01em; text-wrap:pretty;">want this checked against your app automatically? the mobile app kit does it.</span>
+                </a>
+              </section>
+            </sc-if>
+          </main>
+        </div>
+
+        <section data-anchor="related">
+          <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">{{ n.related }}</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">related</h2></div>
+          <div style="display:grid; grid-template-columns:{{ relatedCols }}; border-top:1px solid rgba(255,255,255,0.08); margin-right:-1px;">
+            <sc-for list="{{ related }}" as="r" hint-placeholder-count="3">
+              <div style="min-width:0; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);">
+                <dc-import name="CLCard" entry-id="{{ r.id }}" bp="{{ r.bp }}" hint-size="100%,436px"></dc-import>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+
+      <div style="margin-top:{{ footGap }}px;"><dc-import name="CLFooter" bp="{{ bp }}" hint-size="100%,72px"></dc-import></div>
+
+      <sc-if value="{{ isM }}">
+        <div style="position:{{ barPos }}; bottom:0; z-index:30; padding:4px 16px calc(4px + env(safe-area-inset-bottom)); background:#0E0F10; border-top:1px solid rgba(255,255,255,0.08);">
+          <button onClick="{{ onPrimary }}" style="width:100%; height:48px; display:flex; align-items:center; justify-content:center; background:#FF5B1F; color:#0E0F10; border:0; border-radius:0; font-family:{{ primaryFont }}; font-size:{{ barFontSize }}; font-weight:500; cursor:pointer; white-space:nowrap;" style-focus="outline:2px solid #EDEBE7; outline-offset:-4px;">{{ primaryLabel }}</button>
+        </div>
+      </sc-if>
+    </div>
+    <div style="position:absolute; inset:0; z-index:50; pointer-events:none; opacity:0.06; background-image:{{ grain }};"></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;slug&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;kit&quot;,&quot;skill&quot;,&quot;context&quot;],&quot;default&quot;:&quot;kit&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Page&quot;},&quot;width&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:null,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Frame&quot;},&quot;viewportHeight&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:null,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Frame&quot;},&quot;scrollTo&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;&quot;,&quot;how&quot;,&quot;see&quot;,&quot;get&quot;,&quot;install&quot;,&quot;inside&quot;,&quot;rules&quot;,&quot;related&quot;],&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Frame&quot;},&quot;initialTab&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;State&quot;},&quot;treeOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;State&quot;},&quot;applied&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;State&quot;},&quot;downloading&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;State&quot;}}">
+const GRAIN = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")`;
+const RULE = 'rgba(255,255,255,0.08)';
+
+const KIT_FILES = [
+  { path: 'SKILL.md', lines: ['---', 'name: mobile-app-context', 'description: Builds and maintains CONTEXT.md for a mobile app.', '  Use when someone says "set up context", "my app looks generic",', '  or before a redesign in Claude Design.', '---', '# Mobile App Context', '1. Detect mode: existing app (scan) or new idea (research).', '2. Scan or research silently. Report what you found.', '3. Ask with the question tool. Max 4 per round. Options from findings.', '4. Write CONTEXT.md. Tag every line: [code] [you] [research] [rule].', '5. Add @CONTEXT.md to CLAUDE.md.'] },
+  { path: 'references/template.md', lines: ['# CONTEXT.md — {app name}', '## Product', "- what it is, in one sentence", "- who it's for, what they do daily", '## Tokens', '| Token | Value | Used for | Source |', '## Type', '| Role | Font | Size / Line | Source |', '## Rules', '- radius, spacing, touch targets, accent ration', '## Screens', '- name · job · primary action', '## Known issues', '- what the code says is broken or missing'] },
+  { path: 'references/questions.md', lines: ['# Question bank', 'Ask with the question tool. Max 4 per round.', 'Build options from findings, never from this list.', '## Colour', '- "I found {n} {hue}s. Which is the accent?"', '- "Where should the accent be allowed?" (multi)', '## Type', '- "Your headings use {font} at {sizes}. Keep it?"', '## Density', '- "Your list rows are {h}pt. Compact or roomy?"', '## Voice', '- "Pick the line that sounds like your app."'] },
+  { path: 'references/ios-rules.md', lines: ['# iOS rules — tag [rule]', '- Touch targets ≥ 44pt.', '- Dynamic Type: body scales, no fixed heights on text.', '- Tab bar: 3–5 items, labels always visible.', '- Safe areas respected on every edge.', '- Sign in with Apple if any social login.', '- Account deletion reachable in-app.'] },
+  { path: 'references/where-to-look.md', lines: ['# Where to look — scan order', '1. theme / tokens: theme.ts, colors.ts, tailwind.config', '2. components: Button, Card, ListRow, TabBar', '3. screens: app/(tabs)/*, screens/*', '4. copy: en.json, strings, onboarding', '5. data: schema, migrations, supabase/types', 'Count every colour use. Note the file and line.', 'Report: "found N colours, M fonts, K screens."'] },
+  { path: 'examples/reelhouse.md', lines: ['# CONTEXT.md — Reelhouse', '## Product', '- A film diary. Log what you watched, rate it, see your year.', '## Tokens', '| Accent | #C41E3A | stars, active nav, 1 primary | code (47×) + you |', '| Base   | #0D0D0D | background only              | code: theme.ts:4 |', '## Rules', '- Radius: 8 / 14 / 20 / 28 / full. Nothing else.   [you]', '- Touch targets ≥ 44pt.                            [iOS rule]', '## Known issues', '- avatar_url never written. Avatar upload missing. [code: 5 files]'] },
+];
+const SKILL_FILES = [
+  { path: 'SKILL.md', lines: ['---', 'name: handoff', 'description: Writes the prompt for the next tool from CONTEXT.md.', '  Use when someone says "send this to claude design",', '  "write the plan mode prompt" or "hand this off to claude code".', '---', '# Handoff', "1. Read CONTEXT.md. Stop and ask if it's missing.", '2. Detect the target: claude design, claude code, artifact.', '3. Load the matching reference. Use only what it lists.', '4. Write one prompt. No commentary around it.', '5. End with the checks the target must pass.'] },
+  { path: 'references/design.md', lines: ['# Target: Claude Design', 'Shape: PREAMBLE + THIS PASS + CHECK BEFORE ACCEPTING + DO NOT', '- preamble repeated verbatim every pass', '- max 3 screens per pass', '- tokens as values, never names', '- checks are numbered and testable', 'Leave out: stack, file paths, data models'] },
+  { path: 'references/plan-mode.md', lines: ['# Target: Claude Code (plan mode)', 'Open with: Read CONTEXT.md first.', 'Then: the screens or features to build, by name.', "Then: PLAN FIRST. Don't write code until I approve.", 'Then: Flag conflicts with the stack.', 'Leave out: mood words, references, visual rationale'] },
+  { path: 'references/artifact.md', lines: ['# Target: Artifact', 'Include: Product + Design sections from CONTEXT.md', 'Format: single file, inline CSS + JS', 'Scope: the one interaction that matters', 'Data: realistic, 5–8 rows, no lorem', 'Leave out: routing, auth, build tooling'] },
+];
+
+const PAGES = {
+  kit: {
+    type: 'kit', crumb: 'kits', crumbLast: 'mobile app kit', title: 'Mobile App Kit',
+    desc: 'Scans your app or interviews you, then writes the CONTEXT.md every design and build prompt reads from. You answer pop-ups. You never edit a file.',
+    meta: 'khalid · @khalerdameen · updated oct 2026 · cc by 4.0', works: ['claude code', 'claude app', 'claude design'],
+    primary: 'download .zip', primaryKind: 'download', file: 'mobile-app-kit.zip · 18 kb', secondary: 'copy context template',
+    facts: [['time to run', '~5 min'], ['questions', '~15 clicks'], ['modes', 'new idea · existing app'], ['output', 'CONTEXT.md']],
+    tryIt: 'set up context for my app', installTitle: 'install',
+    tabs: [
+      { k: 'code', label: 'Claude Code', steps: ['unzip into `~/.claude/skills/`', 'open your project in Claude Code', 'type: `set up context for my app`'] },
+      { k: 'app', label: 'Claude app', steps: ['Settings → Capabilities → Skills', 'upload the .zip', 'in a Project, type: `set up context for my app`'] },
+      { k: 'other', label: 'Other', steps: ['open `SKILL.md`', 'paste it as instructions in your tool', 'answer the questions in chat'] },
+    ],
+    files: KIT_FILES, related: ['context', 'handoff', 'review'], n: { install: '04', inside: '05', related: '07' },
+  },
+  skill: {
+    type: 'skill', crumb: 'skills', crumbLast: 'handoff', title: 'handoff',
+    desc: 'Writes the right prompt for the next tool: Claude Design, Claude Code plan mode, or an artifact. Each prompt carries only what that tool needs.',
+    meta: 'khalid · @khalerdameen · updated oct 2026 · cc by 4.0', works: ['claude design', 'claude code'],
+    primary: 'download .zip', primaryKind: 'download', file: 'handoff.zip', secondary: null,
+    facts: [['reads', 'CONTEXT.md'], ['outputs', 'a prompt to paste'], ['targets', 'claude design, claude code (plan mode), artifact']],
+    tryIt: 'send pass 1 to claude design', installTitle: 'install',
+    tabs: [
+      { k: 'code', label: 'Claude Code', steps: ['unzip into `~/.claude/skills/`', 'open your project in Claude Code', 'type: `send pass 1 to claude design`'] },
+      { k: 'app', label: 'Claude app', steps: ['Settings → Capabilities → Skills', 'upload the .zip', 'in a Project, type: `send pass 1 to claude design`'] },
+      { k: 'other', label: 'Other', steps: ['open `SKILL.md`', 'paste it as instructions in your tool', 'ask for the handoff prompt in chat'] },
+    ],
+    files: SKILL_FILES, related: ['context', 'review', 'planmode'], n: { install: '03', inside: '04', related: '05' },
+  },
+  context: {
+    type: 'context', crumb: 'context', crumbLast: 'ios app review', title: 'iOS App Review',
+    desc: 'What gets apps rejected, as rules your agent checks before you submit.',
+    meta: 'khalid · @khalerdameen · updated oct 2026 · cc by 4.0', works: ['claude app', 'claude code', 'claude design', 'cursor'],
+    primary: 'copy file', primaryKind: 'copy', secondary: 'download .md',
+    facts: [['type', 'domain rules (same for every iOS app)'], ['length', '64 lines'], ['checked', 'oct 2026']],
+    tryIt: 'check my app against ios app review', installTitle: 'where to put it',
+    tabs: [
+      { k: 'app', label: 'Claude app', steps: ['open your Project → Project knowledge', 'add `ios-app-review.md`', 'ask: `check my app against ios app review`'] },
+      { k: 'code', label: 'Claude Code', steps: ['save `ios-app-review.md` in your repo root', 'add `@ios-app-review.md` to `CLAUDE.md`', 'ask: `check this build against ios app review`'] },
+      { k: 'design', label: 'Claude Design', steps: ['copy the file', 'paste it as the preamble of your first pass'] },
+      { k: 'cursor', label: 'Cursor', steps: ['save it as `.cursor/rules/ios-app-review.md`', 'it loads in every chat in this project'] },
+    ],
+    files: null, related: ['mobile-kit', 'review', 'planmode'], n: { install: '02', inside: '', related: '04' },
+  },
+};
+
+const RULES = ['# iOS App Review — rules', '## Sign-in', '- Any social login → Sign in with Apple, visually equal', '## Accounts', '- Account deletion reachable in-app, not just by email', '## Permissions', '- A purpose string for every permission you request', '## Purchases', '- Restore Purchases visible next to any paywall'];
+const APPLIED = ['✓ Sign in with Apple equal to Google        [code: sign-in.tsx]', '✕ Account deletion only via email           [code: settings/account]', '✓ Purpose strings: camera, photos, location [app.json]'];
+const GET_LINES = ['## Tokens', '| Accent | #C41E3A | stars, active nav, 1 primary | code (47×) + you |', '| Base   | #0D0D0D | background only              | code: theme.ts:4 |', '## Rules', '- Radius: 8 / 14 / 20 / 28 / full. Nothing else.   [you]', '- Touch targets ≥ 44pt.                            [iOS rule]', '## Known issues', '- avatar_url never written. Avatar upload missing. [code: 5 files]'];
+const HOW = [
+  { n: '01', t: 'scan', d: "reads your code, theme, screens and docs. or researches your category if you're starting fresh." },
+  { n: '02', t: 'ask', d: "pop-up questions built from what it found. click, don't type." },
+  { n: '03', t: 'write', d: 'CONTEXT.md with every line tagged by source.' },
+  { n: '04', t: 'hand off', d: 'loads in every Claude Code session. feeds Claude Design passes.' },
+];
+const Q1 = [
+  { a: '#C41E3A', b: '— used 47× (buttons, stars)', sw: '#C41E3A' },
+  { a: '#8B1A1A', b: '— used 12× (badges)', sw: '#8B1A1A' },
+  { a: '#E63946', b: '— used 3× (looks like a leftover)', sw: '#E63946' },
+  { a: 'Other', b: 'type your own', sw: null },
+];
+const Q2 = ['Primary action', 'Ratings', 'Active nav', 'Earned states', 'Other'];
+const PROMPTS = [
+  { label: '→ claude design', lines: ['[PREAMBLE — Product, Direction, Tokens, Rules]', '[THIS PASS — 3 screens]', '[CHECK BEFORE ACCEPTING — 7 rules]', '[DO NOT — pastel cards, greeting header]'] },
+  { label: '→ claude code (plan mode)', lines: ['Read CONTEXT.md first.', 'Build: Today, Add lecture, Plan detail.', "PLAN FIRST. Don't write code until I approve.", 'Flag conflicts with the stack.'] },
+  { label: '→ artifact', lines: ['Product + Design sections', 'single file, inline CSS + JS', 'the one interaction that matters'] },
+];
+const TRIGGERS = ['send this to claude design', 'write the plan mode prompt', 'hand this off to claude code'];
+
+const parseParts = s => s.split('`').map((t, i) => i % 2
+  ? { t, font: "'Geist Mono',monospace", size: '14px', bg: '#141517', pad: '2px 6px' }
+  : { t, font: "'Geist',sans-serif", size: '15px', bg: 'transparent', pad: '0' });
+
+class Component extends DCLogic {
+  state = { mw: 1440, tab: null, file: 0, treeOpen: !!this.props.treeOpen, applied: !!this.props.applied, q1: 0, q2: [true, true, true, false, false], dl: false, copiedP: false, copiedS: false, genHover: false };
+  rootRef = React.createRef();
+  noop = e => e.preventDefault();
+
+  componentDidMount() {
+    this.rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const el = this.rootRef.current;
+    if (this.props.width == null && el && window.ResizeObserver) {
+      this.ro = new ResizeObserver(e => this.setState({ mw: e[0].contentRect.width }));
+      this.ro.observe(el);
+    }
+    if (this.props.scrollTo) {
+      let n = 0;
+      this.st = setInterval(() => { this.goScroll(); if (++n > 30) clearInterval(this.st); }, 100);
+    }
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); clearInterval(this.st); clearTimeout(this.t1); clearTimeout(this.t2); }
+  goScroll() {
+    const el = this.rootRef.current;
+    const t = el && el.querySelector(`[data-anchor="${this.props.scrollTo}"]`);
+    if (!t) return;
+    const r = el.getBoundingClientRect();
+    const scale = el.offsetHeight ? r.height / el.offsetHeight : 1;
+    const target = (t.getBoundingClientRect().top - r.top) / scale + el.scrollTop - 64;
+    if (target > 0 && Math.abs(el.scrollTop - target) > 1) el.scrollTop = target;
+  }
+  flash(key, timerKey) {
+    this.setState({ [key]: true });
+    clearTimeout(this[timerKey]);
+    this[timerKey] = setTimeout(() => this.setState({ [key]: false }), 2000);
+  }
+
+  renderVals() {
+    const slug = PAGES[this.props.slug] ? this.props.slug : 'kit';
+    const p = PAGES[slug];
+    const w = this.props.width ?? this.state.mw;
+    const bp = w >= 1024 ? 'd' : w >= 600 ? 't' : 'm';
+    const isD = bp === 'd', isT = bp === 't', isM = bp === 'm';
+    const pad = isM ? 20 : 24;
+    const margin = { d: 40, t: 24, m: 16 }[bp];
+    const vh = this.props.viewportHeight;
+    const tabKey = this.state.tab ?? this.props.initialTab ?? p.tabs[0].k;
+    const tab = p.tabs.find(t => t.k === tabKey) || p.tabs[0];
+    const files = p.files || [];
+    const fi = Math.min(this.state.file, Math.max(0, files.length - 1));
+    const dl = this.state.dl || !!this.props.downloading;
+    const primaryLabel = p.primaryKind === 'download' ? (dl ? `downloading ${p.file}` : p.primary) : (this.state.copiedP ? 'copied' : p.primary);
+    const groups = [];
+    files.forEach((f, i) => {
+      const parts = f.path.split('/');
+      if (parts.length > 1 && !groups.includes(parts[0])) groups.push(parts[0]);
+    });
+    const tree = [];
+    files.filter(f => !f.path.includes('/')).forEach(f => tree.push({ f }));
+    groups.forEach(g => { tree.push({ g }); files.filter(f => f.path.startsWith(g + '/')).forEach(f => tree.push({ f, nested: true })); });
+    const fileItem = f => {
+      const i = files.indexOf(f), on = i === fi;
+      return { path: f.path, bg: on ? '#141517' : 'transparent', color: on ? '#EDEBE7' : '#8C8A86', onClick: () => this.setState({ file: i, treeOpen: false }) };
+    };
+    const g = this.state.genHover;
+    const trans = this.rm ? 'none' : 'transform 200ms ease-out, background-color 200ms ease-out';
+    return {
+      p: { ...p, facts: p.facts.map(([k, v]) => ({ k, v })) }, bp, isM, noop: this.noop, rootRef: this.rootRef, grain: GRAIN,
+      rootH: vh ? vh + 'px' : 'auto', rootOverflow: vh ? 'auto' : 'visible',
+      margin, padX: pad, tabPad: pad - 14,
+      cb: isD && w - 2 * margin > 1203 ? RULE : 'transparent',
+      headPadT: isM ? 24 : 32, secPadY: isD ? 48 : 40,
+      pageTitle: { d: 56, t: 44, m: 36 }[bp], secTitle: { d: 28, t: 24, m: 22 }[bp],
+      footGap: isM ? 64 : 96,
+      isKitType: p.type === 'kit', isSkillType: p.type === 'skill', isContextType: p.type === 'context',
+      isKit: slug === 'kit', isSkill: slug === 'skill', isContext: slug === 'context',
+      splitCols: isD ? 'minmax(0,2fr) minmax(0,1fr)' : 'minmax(0,1fr)',
+      mainBorderR: isD ? RULE : 'transparent',
+      railOrder: isD ? 2 : 0, railPos: isD ? 'sticky' : 'relative', railTop: isD ? '64px' : '0px', railBorderB: isD ? 'transparent' : RULE,
+      railCols: isT ? 'minmax(0,1fr) minmax(0,1fr)' : 'minmax(0,1fr)',
+      showButtons: !isM || !!p.secondary, showPrimaryInRail: !isM, hasSecondary: !!p.secondary,
+      btnDir: isT ? 'row' : 'column', railBtnBorderR: isT ? RULE : 'transparent',
+      tryOrder: isT ? 1 : 3, tryBorderT: isT ? 'transparent' : RULE, factsOrder: 2,
+      factsCols: isT ? `repeat(${p.facts.length}, minmax(0,1fr))` : 'minmax(0,1fr)',
+      factDir: isT ? 'column' : 'row', factAlign: isT ? 'left' : 'right',
+      primaryLabel, primaryFont: dl && p.primaryKind === 'download' ? "'Geist Mono',monospace" : "'Geist',sans-serif",
+      barFontSize: dl ? '13px' : '15px', barPos: vh ? 'sticky' : 'relative',
+      onPrimary: () => p.primaryKind === 'download' ? this.flash('dl', 't1') : this.flash('copiedP', 't1'),
+      secondaryLabel: this.state.copiedS ? 'copied' : p.secondary,
+      onSecondary: () => this.flash('copiedS', 't2'),
+      howCols: `repeat(${{ d: 4, t: 2, m: 1 }[bp]}, minmax(0,1fr))`, howMinH: isD ? 240 : 0, howGap: isM ? 20 : 40,
+      how: HOW,
+      q1: Q1.map((o, i) => ({ ...o, hasSwatch: !!o.sw, ring: this.state.q1 === i ? '#EDEBE7' : '#8C8A86', dot: this.state.q1 === i ? '#EDEBE7' : 'transparent', bg: 'transparent', onClick: () => this.setState({ q1: i }) })),
+      q2: Q2.map((label, i) => { const on = this.state.q2[i]; return { label, on, ring: on ? '#EDEBE7' : '#8C8A86', fill: on ? '#EDEBE7' : 'transparent', onClick: () => this.setState(s => { const q = [...s.q2]; q[i] = !q[i]; return { q2: q }; }) }; }),
+      getCols: isM ? 'minmax(0,1fr)' : 'minmax(0,2fr) 56px minmax(0,5fr)', getArrowT: isM ? 'rotate(90deg)' : 'none', getLines: GET_LINES,
+      triggers: TRIGGERS, prompts: PROMPTS, promptsCols: isD ? 'repeat(3, minmax(0,1fr))' : 'minmax(0,1fr)',
+      modes: [['rules', false], ['applied', true]].map(([label, val]) => { const on = this.state.applied === val; return { label, bg: on ? '#EDEBE7' : 'transparent', color: on ? '#0E0F10' : '#8C8A86', onClick: () => this.setState({ applied: val }) }; }),
+      ruleLines: this.state.applied ? APPLIED : RULES, ruleLabel: this.state.applied ? 'applied · your app' : 'ios-app-review.md',
+      n: p.n,
+      tabs: p.tabs.map(t => ({ label: t.label, active: t.k === tab.k, color: t.k === tab.k ? '#EDEBE7' : '#8C8A86', onClick: () => this.setState({ tab: t.k }) })),
+      tabUnderline: '#EDEBE7',
+      steps: tab.steps.map((s, i) => ({ n: '0' + (i + 1), parts: parseParts(s) })),
+      hasInside: files.length > 0,
+      insideCols: isM ? 'minmax(0,1fr)' : `${isD ? 248 : 220}px minmax(0,1fr)`,
+      treeSide: !isM, treeDrop: isM,
+      tree: tree.map(t => t.g ? { isGroup: true, isFile: false, label: t.g + '/' } : { isGroup: false, isFile: true, label: t.f.path.split('/').pop(), indent: t.nested ? 40 : pad, ...fileItem(t.f) }),
+      treeFlat: files.map(fileItem),
+      activeFile: files[fi] ? files[fi].path : '', fileLines: files[fi] ? files[fi].lines : [],
+      treeOpenNow: this.state.treeOpen, chevT: this.state.treeOpen ? 'rotate(180deg)' : 'none',
+      toggleTree: () => this.setState(s => ({ treeOpen: !s.treeOpen })),
+      gen: { bg: g ? '#141517' : '#0E0F10', trans, arrowColor: g ? '#FF5B1F' : '#8C8A86', arrowT: g ? 'translate(4px,-4px)' : 'none' },
+      genEnter: () => this.setState({ genHover: true }), genLeave: () => this.setState({ genHover: false }),
+      related: p.related.map(id => ({ id, bp })), relatedCols: isM ? 'minmax(0,1fr)' : 'repeat(3, minmax(0,1fr))',
+    };
+  }
+}
+</script>
+</body>
+</html>

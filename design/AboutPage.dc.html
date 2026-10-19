@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#0E0F10}a{color:#EDEBE7;text-decoration:none}a:hover{color:#EDEBE7}</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative; background:#0E0F10; color:#EDEBE7; font-family:'Geist',system-ui,sans-serif; -webkit-font-smoothing:antialiased;">
+  <div style="position:relative; padding:0 {{ margin }}px;">
+    <div style="border-left:1px solid rgba(255,255,255,0.08); border-right:1px solid rgba(255,255,255,0.08);">
+      <dc-import name="CLTopBar" bp="{{ bp }}" active="about" style="position:sticky; top:0; z-index:20; display:block;" hint-size="100%,64px"></dc-import>
+
+      <section style="padding:{{ heroPadT }}px {{ padX }}px {{ heroPadB }}px; border-bottom:1px solid rgba(255,255,255,0.08);">
+        <h1 style="margin:0; max-width:14ch; font-size:{{ display }}px; line-height:1.1; letter-spacing:-0.02em; font-weight:500; text-wrap:balance;">ai didn't make it generic. the brief did.</h1>
+        <p style="margin:28px 0 0; max-width:56ch; font-size:15px; line-height:1.5; color:#EDEBE7; text-wrap:pretty;">every output is a prompt, context and a skill. most people only send the prompt. context labs is the other two, ready to take.</p>
+      </section>
+
+      <section style="border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">01</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">the three inputs</h2></div>
+        <div style="display:grid; grid-template-columns:{{ threeCols }}; border-top:1px solid rgba(255,255,255,0.08); margin-right:-1px;">
+          <sc-for list="{{ inputs }}" as="c" hint-placeholder-count="3">
+            <div style="display:flex; flex-direction:column; padding:{{ padX }}px; border-right:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);">
+              <span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">{{ c.k }}</span>
+              <span style="margin-top:32px; font-size:20px; font-weight:500; letter-spacing:-0.01em; line-height:1.3;">{{ c.q }}</span>
+              <span style="margin-top:8px; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">{{ c.lasts }}</span>
+              <span style="margin-top:32px; padding:14px 16px; background:#141517; font-family:'Geist Mono',monospace; font-size:13px; line-height:1.45; color:#EDEBE7;">{{ c.ex }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="padding:20px {{ padX }}px; font-family:'Geist Mono',monospace; font-size:13px; line-height:1.5; color:#EDEBE7;">prompt × context × skill. any of them at zero → generic.</div>
+      </section>
+
+      <section style="border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">02</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">three levels</h2></div>
+        <div style="padding:0 {{ padX }}px {{ secPadY }}px;">
+          <div style="max-width:960px; border:1px solid rgba(255,255,255,0.24); padding:{{ nestPad }}px;">
+            <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">personal</span><span style="font-family:'Geist Mono',monospace; font-size:15px;">about-me.md</span><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">set once</span></div>
+            <div style="margin-top:8px; font-size:15px; line-height:1.5; color:#8C8A86;">lives in your claude app profile or ~/.claude/CLAUDE.md. every chat reads it.</div>
+            <div style="margin-top:{{ nestPad }}px; border:1px solid rgba(255,255,255,0.24); padding:{{ nestPad }}px; background:#121314;">
+              <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">project</span><span style="font-family:'Geist Mono',monospace; font-size:15px;">CONTEXT.md</span><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">every decision</span></div>
+              <div style="margin-top:8px; font-size:15px; line-height:1.5; color:#8C8A86;">lives in the repo root, loaded through CLAUDE.md or project knowledge.</div>
+              <div style="margin-top:{{ nestPad }}px; border:1px solid rgba(255,255,255,0.24); padding:{{ nestPad }}px; background:#141517;">
+                <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;">task</span><span style="font-family:'Geist Mono',monospace; font-size:15px;">the screenshot, the error</span><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">every prompt</span></div>
+                <div style="margin-top:8px; font-size:15px; line-height:1.5; color:#8C8A86;">lives in the message you send, then it's gone.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">03</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">the loop</h2></div>
+        <div style="padding:0 {{ padX }}px;">
+          <sc-if value="{{ loopGrid }}" hint-placeholder-val="{{ true }}">
+            <div style="max-width:1120px; display:grid; grid-template-columns:minmax(0,1fr) {{ connW }}px minmax(0,1fr) {{ connW }}px minmax(0,1fr); grid-template-rows:auto 96px auto 80px;">
+              <div style="grid-column:1; grid-row:1; padding:16px 20px; border:1px solid rgba(255,255,255,0.24); background:#141517; display:flex; flex-direction:column; gap:6px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">claude app</span><span style="font-size:15px;">context + research</span><span style="font-family:'Geist Mono',monospace; font-size:13px;">CONTEXT.md</span></div>
+              <div style="grid-column:2; grid-row:1; display:flex; flex-direction:column; justify-content:center; gap:8px; padding:0 10px;"><span style="text-align:center; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">handoff</span><div style="position:relative; height:1px; background:rgba(255,255,255,0.4);"><svg width="6" height="10" viewBox="0 0 6 10" fill="none" stroke="#8C8A86" stroke-width="1.3" style="position:absolute; right:0; top:-4.5px;"><path d="M1 1l4 4-4 4"></path></svg></div></div>
+              <div style="grid-column:3; grid-row:1; padding:16px 20px; border:1px solid rgba(255,255,255,0.24); background:#141517; display:flex; flex-direction:column; gap:6px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">claude design</span><span style="font-size:15px;">design passes</span></div>
+              <div style="grid-column:4; grid-row:1; display:flex; flex-direction:column; justify-content:center; gap:8px; padding:0 10px;"><span style="text-align:center; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">screenshots</span><div style="position:relative; height:1px; background:rgba(255,255,255,0.4);"><svg width="6" height="10" viewBox="0 0 6 10" fill="none" stroke="#8C8A86" stroke-width="1.3" style="position:absolute; right:0; top:-4.5px;"><path d="M1 1l4 4-4 4"></path></svg></div></div>
+              <div style="grid-column:5; grid-row:1; padding:16px 20px; border:1px solid rgba(255,255,255,0.24); background:#141517; display:flex; flex-direction:column; gap:6px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">review</span><span style="font-size:15px;">checks against context</span></div>
+
+              <div style="grid-column:1; grid-row:2 / 5; position:relative;">
+                <div style="position:absolute; left:50%; top:0; bottom:40px; border-left:1px solid rgba(255,255,255,0.4);"></div>
+                <div style="position:absolute; left:50%; right:0; bottom:40px; border-top:1px solid rgba(255,255,255,0.4);"></div>
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#8C8A86" stroke-width="1.3" style="position:absolute; left:calc(50% - 4.5px); top:0;"><path d="M1 5l4-4 4 4"></path></svg>
+              </div>
+              <div style="grid-column:3; grid-row:2; position:relative;">
+                <div style="position:absolute; left:30%; top:0; bottom:0; border-left:1px solid rgba(255,255,255,0.4);"></div>
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#8C8A86" stroke-width="1.3" style="position:absolute; left:calc(30% - 4.5px); bottom:0;"><path d="M1 1l4 4 4-4"></path></svg>
+                <span style="position:absolute; left:calc(30% + 12px); top:50%; transform:translateY(-50%); font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86; white-space:nowrap;">approved · handoff</span>
+                <div style="position:absolute; left:80%; right:0; top:0; height:56px; border-left:1px solid rgba(255,255,255,0.4); border-bottom:1px solid rgba(255,255,255,0.4);"></div>
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#8C8A86" stroke-width="1.3" style="position:absolute; left:calc(80% - 4.5px); top:0;"><path d="M1 5l4-4 4 4"></path></svg>
+              </div>
+              <div style="grid-column:4; grid-row:2; position:relative;">
+                <div style="position:absolute; left:0; right:0; top:0; height:56px; border-bottom:1px solid rgba(255,255,255,0.4);"></div>
+                <span style="position:absolute; left:0; right:0; top:66px; text-align:center; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86; white-space:nowrap;">fix prompt</span>
+              </div>
+              <div style="grid-column:5; grid-row:2; position:relative;">
+                <div style="position:absolute; left:0; right:50%; top:0; height:56px; border-right:1px solid rgba(255,255,255,0.4); border-bottom:1px solid rgba(255,255,255,0.4);"></div>
+              </div>
+
+              <div style="grid-column:3; grid-row:3; padding:16px 20px; border:1px solid rgba(255,255,255,0.24); background:#141517; display:flex; flex-direction:column; gap:6px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">claude code · plan mode</span><span style="font-size:15px;">plan, approve, build</span></div>
+              <div style="grid-column:4; grid-row:3; display:flex; flex-direction:column; justify-content:center; gap:8px; padding:0 10px;"><span style="text-align:center; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">build</span><div style="position:relative; height:1px; background:rgba(255,255,255,0.4);"><svg width="6" height="10" viewBox="0 0 6 10" fill="none" stroke="#8C8A86" stroke-width="1.3" style="position:absolute; right:0; top:-4.5px;"><path d="M1 1l4 4-4 4"></path></svg></div></div>
+              <div style="grid-column:5; grid-row:3; padding:16px 20px; border:1px solid rgba(255,255,255,0.24); background:#141517; display:flex; flex-direction:column; gap:6px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">you type</span><span style="font-family:'Geist Mono',monospace; font-size:14px;">› update my context</span></div>
+
+              <div style="grid-column:2 / 5; grid-row:4; position:relative;">
+                <div style="position:absolute; left:0; right:0; top:0; height:40px; border-bottom:1px solid rgba(255,255,255,0.4);"></div>
+                <span style="position:absolute; left:0; right:0; top:50px; text-align:center; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">back to CONTEXT.md</span>
+              </div>
+              <div style="grid-column:5; grid-row:4; position:relative;">
+                <div style="position:absolute; left:0; right:50%; top:0; height:40px; border-right:1px solid rgba(255,255,255,0.4); border-bottom:1px solid rgba(255,255,255,0.4);"></div>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ loopList }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column;">
+              <sc-for list="{{ loopSteps }}" as="s">
+                <sc-if value="{{ s.isNode }}">
+                  <div style="padding:16px 20px; border:1px solid rgba(255,255,255,0.24); background:#141517; display:flex; flex-direction:column; gap:6px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86;">{{ s.k }}</span><span style="font-family:{{ s.font }}; font-size:15px;">{{ s.v }}</span></div>
+                </sc-if>
+                <sc-if value="{{ s.isConn }}">
+                  <div style="display:flex; align-items:center; gap:16px; min-height:52px; padding-left:28px;">
+                    <div style="position:relative; align-self:stretch; width:1px; background:rgba(255,255,255,0.4);"><svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#8C8A86" stroke-width="1.3" style="position:absolute; left:-4.5px; bottom:0;"><path d="M1 1l4 4 4-4"></path></svg></div>
+                    <span style="padding:10px 0; font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#8C8A86; line-height:1.5;">{{ s.v }}</span>
+                  </div>
+                </sc-if>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+        <p style="margin:0; padding:28px {{ padX }}px {{ secPadY }}px; max-width:56ch; font-size:15px; line-height:1.5; color:#8C8A86;">one file moves through every tool. each tool gets a prompt shaped for it.</p>
+      </section>
+
+      <section style="border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div style="display:flex; align-items:baseline; gap:16px; padding:{{ secPadY }}px {{ padX }}px 28px;"><span style="font-family:'Geist Mono',monospace; font-size:12px; color:#8C8A86;">04</span><h2 style="margin:0; font-size:{{ secTitle }}px; font-weight:500; letter-spacing:-0.01em; line-height:1.2;">who makes this</h2></div>
+        <div style="padding:0 {{ padX }}px {{ secPadY }}px; display:flex; flex-direction:column; align-items:flex-start; gap:32px;">
+          <p style="margin:0; max-width:52ch; font-size:20px; line-height:1.45; text-wrap:pretty;">context labs is made by khalid — designer and builder behind routn, reelhouse and khadstudio. every entry is tested on a real project before it goes up.</p>
+          <a href="#" onClick="{{ noop }}" style="height:48px; padding:0 24px; display:inline-flex; align-items:center; gap:10px; background:#FF5B1F; color:#0E0F10; font-size:15px; font-weight:500;" style-focus="outline:2px solid #FF5B1F; outline-offset:2px;">submit yours <svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 13L13 1M3.5 1H13V10.5"></path></svg></a>
+        </div>
+      </section>
+
+      <div style="margin-top:{{ footGap }}px;"><dc-import name="CLFooter" bp="{{ bp }}" hint-size="100%,72px"></dc-import></div>
+    </div>
+    <div style="position:absolute; inset:0; z-index:50; pointer-events:none; opacity:0.06; background-image:{{ grain }};"></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;width&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:null,&quot;tsType&quot;:&quot;number&quot;}}">
+const GRAIN = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")`;
+const INPUTS = [
+  { k: 'prompt', q: 'what do you want right now?', lasts: 'lasts one message', ex: '› design the home feed' },
+  { k: 'context', q: "what's true here?", lasts: 'lasts one project', ex: 'accent #C41E3A, rationed to 1 per screen' },
+  { k: 'skill', q: 'how is this done?', lasts: 'lasts forever', ex: 'audit → layers → passes → checklist' },
+];
+const MONO = "'Geist Mono',monospace", SANS = "'Geist',sans-serif";
+const LOOP = [
+  { isNode: true, k: 'claude app', v: 'context + research → CONTEXT.md', font: SANS },
+  { isConn: true, v: 'handoff' },
+  { isNode: true, k: 'claude design', v: 'design passes', font: SANS },
+  { isConn: true, v: 'screenshots' },
+  { isNode: true, k: 'review', v: 'checks against context', font: SANS },
+  { isConn: true, v: 'fix prompt → back to claude design · or approved → handoff' },
+  { isNode: true, k: 'claude code · plan mode', v: 'plan, approve, build', font: SANS },
+  { isConn: true, v: 'build' },
+  { isNode: true, k: 'you type', v: '› update my context', font: MONO },
+  { isConn: true, v: 'back to CONTEXT.md' },
+];
+class Component extends DCLogic {
+  state = { mw: 1440 };
+  rootRef = React.createRef();
+  noop = e => e.preventDefault();
+  componentDidMount() {
+    const el = this.rootRef.current;
+    if (this.props.width == null && el && window.ResizeObserver) {
+      this.ro = new ResizeObserver(e => this.setState({ mw: e[0].contentRect.width }));
+      this.ro.observe(el);
+    }
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  renderVals() {
+    const w = this.props.width ?? this.state.mw;
+    const bp = w >= 1024 ? 'd' : w >= 600 ? 't' : 'm';
+    const isM = bp === 'm';
+    return {
+      bp, rootRef: this.rootRef, noop: this.noop, grain: GRAIN,
+      margin: { d: 40, t: 24, m: 16 }[bp], padX: isM ? 20 : 24,
+      display: { d: 72, t: 64, m: 44 }[bp], secTitle: { d: 28, t: 24, m: 22 }[bp],
+      heroPadT: { d: 120, t: 88, m: 56 }[bp], heroPadB: { d: 96, t: 72, m: 48 }[bp],
+      secPadY: bp === 'd' ? 48 : 40, footGap: isM ? 64 : 96,
+      threeCols: isM ? 'minmax(0,1fr)' : 'repeat(3, minmax(0,1fr))',
+      nestPad: isM ? 16 : 24,
+      inputs: INPUTS,
+      loopGrid: !isM, loopList: isM, connW: bp === 'd' ? 128 : 96,
+      loopSteps: LOOP.map(s => ({ isNode: !!s.isNode, isConn: !!s.isConn, ...s })),
+    };
+  }
+}
+</script>
+</body>
+</html>

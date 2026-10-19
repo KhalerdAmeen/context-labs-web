@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#232426}a{color:#EDEBE7;text-decoration:none}a:hover{color:#EDEBE7}</style>
+</helmet>
+<section style="padding:96px; background:#232426; color:#EDEBE7; font-family:'Geist',system-ui,sans-serif; width:4300px; display:flex; flex-direction:column; gap:56px;">
+  <div style="display:flex; flex-direction:column; gap:10px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="color:#EDEBE7; font-size:16px;">page 4 — about · /about</span></div>
+  <div style="display:flex; flex-wrap:wrap; gap:120px 80px; align-items:flex-start;">
+    <div id="4a" style="display:flex; flex-direction:column; gap:16px; width:1440px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">4a</span><span>1440 · full page</span></div>
+      <div style="width:1440px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="AboutPage" width="{{ 1440 }}" hint-size="1440px,3200px"></dc-import></div>
+    </div>
+    <div id="4b" style="display:flex; flex-direction:column; gap:16px; width:768px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">4b</span><span>768 · full page</span></div>
+      <div style="width:768px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="AboutPage" width="{{ 768 }}" hint-size="768px,3600px"></dc-import></div>
+    </div>
+    <div id="4c" style="display:flex; flex-direction:column; gap:16px; width:390px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">4c</span><span>390 · full page · loop goes vertical</span></div>
+      <div style="width:390px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="AboutPage" width="{{ 390 }}" hint-size="390px,4600px"></dc-import></div>
+    </div>
+  </div>
+  <div style="margin-top:120px; display:flex; flex-direction:column; gap:10px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="color:#EDEBE7; font-size:16px;">page 5 — submit · /submit</span></div>
+  <div style="display:flex; flex-wrap:wrap; gap:120px 80px; align-items:flex-start;">
+    <div id="5a" style="display:flex; flex-direction:column; gap:16px; width:1440px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">5a</span><span>1440 · empty · submit at 35%</span></div>
+      <div style="width:1440px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="SubmitPage" width="{{ 1440 }}" state="empty" hint-size="1440px,1900px"></dc-import></div>
+    </div>
+    <div id="5b" style="display:flex; flex-direction:column; gap:16px; width:1440px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">5b</span><span>1440 · filled · .zip attached</span></div>
+      <div style="width:1440px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="SubmitPage" width="{{ 1440 }}" state="filled" hint-size="1440px,1900px"></dc-import></div>
+    </div>
+    <div id="5c" style="display:flex; flex-direction:column; gap:16px; width:1440px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">5c</span><span>1440 · field error</span></div>
+      <div style="width:1440px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="SubmitPage" width="{{ 1440 }}" state="error" hint-size="1440px,1900px"></dc-import></div>
+    </div>
+    <div id="5d" style="display:flex; flex-direction:column; gap:16px; width:1440px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">5d</span><span>1440 · success</span></div>
+      <div style="width:1440px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="SubmitPage" width="{{ 1440 }}" state="success" hint-size="1440px,1000px"></dc-import></div>
+    </div>
+    <div id="5e" style="display:flex; flex-direction:column; gap:16px; width:390px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">5e</span><span>390 · empty</span></div>
+      <div style="width:390px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="SubmitPage" width="{{ 390 }}" state="empty" hint-size="390px,2600px"></dc-import></div>
+    </div>
+    <div id="5f" style="display:flex; flex-direction:column; gap:16px; width:390px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">5f</span><span>390 · success</span></div>
+      <div style="width:390px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="SubmitPage" width="{{ 390 }}" state="success" hint-size="390px,1500px"></dc-import></div>
+    </div>
+  </div>
+  <div style="margin-top:120px; display:flex; flex-direction:column; gap:10px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="color:#EDEBE7; font-size:16px;">page 6 — waitlist home · pre-launch /</span></div>
+  <div style="display:flex; flex-wrap:wrap; gap:120px 80px; align-items:flex-start;">
+    <div id="6a" style="display:flex; flex-direction:column; gap:16px; width:1440px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">6a</span><span>1440 · default</span></div>
+      <div style="width:1440px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="WaitlistHome" width="{{ 1440 }}" hint-size="1440px,1900px"></dc-import></div>
+    </div>
+    <div id="6b" style="display:flex; flex-direction:column; gap:16px; width:1440px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">6b</span><span>1440 · success</span></div>
+      <div style="width:1440px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="WaitlistHome" width="{{ 1440 }}" success="{{ true }}" hint-size="1440px,1900px"></dc-import></div>
+    </div>
+    <div id="6c" style="display:flex; flex-direction:column; gap:16px; width:390px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">6c</span><span>390 · default</span></div>
+      <div style="width:390px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="WaitlistHome" width="{{ 390 }}" hint-size="390px,2400px"></dc-import></div>
+    </div>
+    <div id="6d" style="display:flex; flex-direction:column; gap:16px; width:390px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">6d</span><span>390 · success</span></div>
+      <div style="width:390px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="WaitlistHome" width="{{ 390 }}" success="{{ true }}" hint-size="390px,2400px"></dc-import></div>
+    </div>
+  </div>
+  <div style="margin-top:120px; display:flex; flex-direction:column; gap:10px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="color:#EDEBE7; font-size:16px;">page 7 — system states</span></div>
+  <div style="display:flex; flex-wrap:wrap; gap:120px 80px; align-items:flex-start;">
+    <div id="7a" style="display:flex; flex-direction:column; gap:16px; width:390px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">7a</span><span>menu overlay · 390</span></div>
+      <div style="width:390px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="SystemStates" state="menu" width="{{ 390 }}" height="{{ 844 }}" hint-size="390px,844px"></dc-import></div>
+    </div>
+    <div id="7b" style="display:flex; flex-direction:column; gap:16px; width:390px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">7b</span><span>download started · 390 · sticky bar, 2s</span></div>
+      <div style="width:390px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="EntryPage" slug="kit" width="{{ 390 }}" viewport-height="{{ 844 }}" downloading="{{ true }}" hint-size="390px,844px"></dc-import></div>
+    </div>
+    <div id="7c" style="display:flex; flex-direction:column; gap:16px; width:390px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">7c</span><span>404 · 390</span></div>
+      <div style="width:390px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="SystemStates" state="404" width="{{ 390 }}" height="{{ 844 }}" hint-size="390px,844px"></dc-import></div>
+    </div>
+    <div id="7d" style="display:flex; flex-direction:column; gap:16px; width:1440px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">7d</span><span>404 · 1440</span></div>
+      <div style="width:1440px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="SystemStates" state="404" width="{{ 1440 }}" height="{{ 900 }}" hint-size="1440px,900px"></dc-import></div>
+    </div>
+    <div id="7e" style="display:flex; flex-direction:column; gap:16px; width:1440px;">
+      <div style="display:flex; align-items:center; gap:12px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#A8A6A1;"><span style="padding:4px 10px; border:1px solid #A8A6A1; color:#EDEBE7;">7e</span><span>empty filter · 1440 · any combination that returns nothing</span></div>
+      <div style="width:1440px; outline:1px solid rgba(255,255,255,0.14);"><dc-import name="SystemStates" state="empty" width="{{ 1440 }}" hint-size="1440px,1000px"></dc-import></div>
+    </div>
+  </div>
+</section>
+</x-dc>
+</body>
+</html>

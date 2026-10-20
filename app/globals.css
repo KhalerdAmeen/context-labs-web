@@ -44,6 +44,7 @@
   --leading-heading: 1.2;
   --leading-card: 1.25;
   --leading-question: 1.35;
+  --leading-lead: 1.4;
   --leading-prompt: 1.45;
   --leading-body: 1.5;
   --leading-meta: 1.6;
@@ -67,6 +68,9 @@
   --breakpoint-*: initial;
   --breakpoint-t: 600px;
   --breakpoint-d: 1024px;
+  /* entry pages: the 1200px column gets its own side hairlines once there's room (1200 + 2×40 + 4) */
+  --breakpoint-wide: 1284px;
+  --container-page: 1200px;
 
   /* motion */
   --ease-out: ease-out;
@@ -150,6 +154,11 @@
 
 @utility fade-right {
   background: linear-gradient(to right, transparent, var(--cell-bg));
+}
+
+/* code panel collapse mask (design/CLCodePanel.dc.html) */
+@utility fade-up {
+  background: linear-gradient(to bottom, transparent, var(--cell-bg) 85%);
 }
 
 @utility focus-inset {

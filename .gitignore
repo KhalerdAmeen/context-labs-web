@@ -1,6 +1,29 @@
+# dependencies
+/node_modules
+
+# testing
+/coverage
+/test-results
+/playwright-report
+
+# next.js
+/.next/
+/out/
+
+# misc
 .DS_Store
-node_modules/
-.next/
+*.pem
+
+# debug
+npm-debug.log*
+
+# env files — names live in .env.example, values only in Vercel
 .env*
 !.env.example
+
+# vercel
 .vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

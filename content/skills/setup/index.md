@@ -18,45 +18,40 @@ related: [context-labs, handoff, review]
 preview:
   - '---'
   - 'name: context-labs-setup'
-  - 'description: Builds and maintains'
-  - '  CONTEXT.md. Use when someone says "set up context"…'
+  - "description: Builds and maintains a project's CONTEXT.md, the single file every future Claude session…"
   - '---'
-  - '1. Scan the repo for tokens, components, copy'
-  - "2. Ask only what the code can't answer"
+  - '# Context Labs: Setup'
+  - '## Step 1: Pick the mode'
+  - '## Step 2: Scan (silent)'
 triggers:
   - set up context
   - write my brief
   - update my context
   - my app looks generic
+# Excerpts from a real run: ~/Downloads/context-labs/tests/sandbox-cram/CONTEXT.md. Verbatim; "…" marks a cut.
 examples:
-  title: what it asks, what it writes
-  note: options come from your own code, not a template.
+  title: what it writes
+  source: from a real run · Cram, a study planner (test project)
   panels:
-    - label: → it asks
+    - label: → product
       lines:
-        - I found 3 reds in your code. Which is the accent?
-        - '› #C41E3A — used 47× (buttons, stars)'
-        - '  #8B1A1A — used 12× (badges)'
-        - '  #E63946 — used 3× (looks like a leftover)'
-        - ''
-        - Where should the accent be allowed?
-        - '› primary action · ratings · active nav'
-    - label: → it writes
+        - '## Product'
+        - "- What it is: an iPhone app that turns a student's lecture notes into a day-by-day study plan running up to their exams [you]"
+        - "- Core action: open the app and see today's plan, which is already built… [you]"
+        - '- Gap in the market: … None of them plan from the lecture notes themselves [research]'
+    - label: → palette
+      wrap: false
       lines:
-        - '## Tokens'
-        - '| Accent | #C41E3A | 1 primary | code (47×) + you |'
-        - '## Rules'
-        - '- Radius: 8 / 14 / 20. Nothing else.  [you]'
-        - '- Touch targets ≥ 44pt.              [iOS rule]'
-    - label: → after a big change
+        - '| Role | Light | Dark | Where it''s allowed | …'
+        - '|---|---|---|---|'
+        - '| Background | #F3F2EE | #0F0F0E | Screen ground | …'
+        - '| Text | #121211 | #F3F2EE | Titles, body, heavy rules | …'
+        - '| Muted | #62615C | #9C9A94 | Times, metadata, done rows… | …'
+        - '| Accent | #FFC400 | #FFC400 | Exactly one accent; the next / current block fill only | …'
+    - label: → decisions log
       lines:
-        - '› update my context'
-        - ''
-        - 'changed since 2026-09-12:'
-        - '- new colour #46C18A in 3 files'
-        - '- screen removed: Settings/Legacy'
-        - ''
-        - asks before writing a line
+        - '## Decisions log'
+        - '- 2026-10-19: Re-planning asks first and shows what moved [you]'
 install:
   - key: code
     label: Claude Code

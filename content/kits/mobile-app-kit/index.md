@@ -18,12 +18,12 @@ facts:
 related: [setup, handoff, review]
 preview:
   - '## Tokens'
-  - '| Accent | #C41E3A | stars, active nav, 1 primary | code (47×) + you |'
+  - '| Accent | #FFC400 | #FFC400 | Exactly one accent; the next / current block fill only | …'
   - '## Rules'
-  - '- Radius: 8 / 14 / 20 / 28 / full. Nothing else.   [you]'
-  - '- Spacing: 4pt base. Screen margin 20.            [code]'
-  - '- One primary action per screen.                  [you]'
-  - '- Tab bar: 4 items, labels always visible.        [code]'
+  - '- One accent colour only, used to mark the current/next block [you]'
+  - '- Start block stays pinned in the lower third in every Today state… [you]'
+  - '- Touch targets at least 44×44pt… [rule]'
+  - '- Falling behind: when blocks are missed, show what would move and ask before re-planning… [you]'
 how:
   - { t: scan, d: "reads your code, theme, screens and docs. or researches your category if you're starting fresh." }
   - { t: ask, d: "pop-up questions built from what it found. click, don't type." }
@@ -31,34 +31,35 @@ how:
   - { t: hand off, d: loads in every Claude Code session. feeds Claude Design passes. }
 see:
   header: claude is asking · 2 questions
-  note: options come from your own code, not a template.
+  note: options come from what it found, not a template.
+  source: setup's questions · options and answers from a real run on Cram, a study planner (test project)
   questions:
-    - q: I found 3 reds in your code. Which is the accent?
+    - q: Who is Cram for first?
       options:
-        - { a: '#C41E3A', b: '— used 47× (buttons, stars)', swatch: '#C41E3A', on: true }
-        - { a: '#8B1A1A', b: '— used 12× (badges)', swatch: '#8B1A1A' }
-        - { a: '#E63946', b: '— used 3× (looks like a leftover)', swatch: '#E63946' }
+        - { a: Exam-season students, b: '— the 2–6 weeks before finals', on: true }
+        - { a: All students, b: '— all semester' }
         - { a: Other, b: type your own }
-    - q: Where should the accent be allowed?
+    - q: Which parts of the category default should Cram refuse?
       multi: true
       options:
-        - { a: Primary action, on: true }
-        - { a: Ratings, on: true }
-        - { a: Active nav, on: true }
-        - { a: Earned states }
+        - { a: 'Streak flames, mascots and guilt mechanics', on: true }
+        - { a: 'Pastel, emoji-coded task cards', on: true }
+        - { a: 'A "Good evening" greeting header', on: true }
+        - { a: 'The week strip with a "0/3 complete" counter', on: true }
         - { a: Other }
 get:
-  prompt: make my app look premium
+  prompt: set up context for my app
   label: the context.md it writes
+  source: from a real run · Cram, a study planner (test project)
   lines:
+    - '## Product'
+    - "- What it is: an iPhone app that turns a student's lecture notes into a day-by-day study plan running up to their exams [you]"
     - '## Tokens'
-    - '| Accent | #C41E3A | stars, active nav, 1 primary | code (47×) + you |'
-    - '| Base   | #0D0D0D | background only              | code: theme.ts:4 |'
+    - '| Accent | #FFC400 | #FFC400 | Exactly one accent; the next / current block fill only | …'
     - '## Rules'
-    - '- Radius: 8 / 14 / 20 / 28 / full. Nothing else.   [you]'
-    - '- Touch targets ≥ 44pt.                            [iOS rule]'
-    - '## Known issues'
-    - '- avatar_url never written. Avatar upload missing. [code: 5 files]'
+    - '- Start block stays pinned in the lower third in every Today state… [you]'
+    - '## Decisions log'
+    - '- 2026-10-19: Re-planning asks first and shows what moved [you]'
 keep: "after a big change, type: `update my context`. it reads what changed and asks before writing."
 install:
   - key: code

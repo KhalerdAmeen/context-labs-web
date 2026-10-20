@@ -15,39 +15,43 @@ facts:
   - { k: targets, v: "claude design, claude code (plan mode), artifact" }
 download: kits/context-labs/files/context-labs-handoff.zip
 related: [context-labs, setup, review]
+# Excerpts from a real run: ~/Downloads/context-labs/tests/sandbox-cram/.context-labs/handoffs/2026-10-19-design-pass-1.md
 preview:
-  - '[PREAMBLE — Product, Direction, Tokens, Rules]'
-  - '[THIS PASS — 3 screens]'
-  - '[CHECK BEFORE ACCEPTING — 7 rules]'
-  - ''
-  - 'target: claude design'
-  - 'pass: 1 of 6'
-  - 'preamble: repeated verbatim every pass'
+  - 'CRAM — DESIGN PASS 1: the three screens that decide the direction…'
+  - '## PREAMBLE (paste with every pass of this project)'
+  - '## THIS PASS — 3 screens'
+  - '## SHOW'
+  - '## CHECK BEFORE ACCEPTING'
+  - '## DO NOT'
+  - '- More than one accent colour'
 triggers:
   - send this to claude design
   - write the plan mode prompt
   - hand this off to claude code
 examples:
-  title: one context, three prompts
+  title: what it writes
   note: what each tool doesn't need is left out on purpose.
+  source: from a real run · Cram, a study planner (test project)
   panels:
-    - label: → claude design
+    - label: → preamble
       lines:
-        - '[PREAMBLE — Product, Direction, Tokens, Rules]'
-        - '[THIS PASS — 3 screens]'
-        - '[CHECK BEFORE ACCEPTING — 7 rules]'
-        - '[DO NOT — pastel cards, greeting header]'
-    - label: → claude code (plan mode)
+        - '## PREAMBLE (paste with every pass of this project)'
+        - 'Feel: calm, sure, quiet. The app''s job is to lower exam panic: one clear next thing, lots of space.'
+        - 'Refuse:'
+        - '- A "Good evening" greeting header at the top of the screen'
+    - label: → this pass
       lines:
-        - Read CONTEXT.md first.
-        - 'Build: Today, Add lecture, Plan detail.'
-        - "PLAN FIRST. Don't write code until I approve."
-        - Flag conflicts with the stack.
-    - label: → artifact
+        - '## THIS PASS — 3 screens'
+        - '### 1. Today (the core screen)'
+        - 'Job: see what''s next, and start it.'
+        - '### 2. Block (in progress)'
+        - '### 3. Notes import → topic list'
+    - label: → check before accepting
       lines:
-        - Product + Design sections
-        - single file, inline CSS + JS
-        - the one interaction that matters
+        - '## CHECK BEFORE ACCEPTING'
+        - '- Today opens on the next block, not a greeting or a date strip'
+        - '- The accent colour appears only on the current/next block, nowhere else'
+        - '- Start block and Mark done sit in the lower third, at least 44pt tall'
 install:
   - key: code
     label: Claude Code

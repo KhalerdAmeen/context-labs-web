@@ -15,14 +15,16 @@ facts:
   - { k: fixes per round, v: 8 at most }
 download: kits/context-labs/files/context-labs-review.zip
 related: [context-labs, setup, handoff]
+# Excerpts from a real run: ~/Downloads/context-labs/tests/sandbox-cram/.context-labs/reviews/2026-10-19-design-pass-1-r2.md
+# Works (keep) rows are shown as ✓, Fails rows as ✕ (check · screen · kind), as the skill reports them.
 preview:
-  - '✕ Accent appears 3× on Today (rule: 1)'
-  - '✕ Label 9px from pill edge (rule: 14px)'
-  - '✓ Timeline density'
-  - '✓ Tab bar labels visible'
-  - '✕ Card radius 12 (allowed: 8 / 14 / 20)'
+  - '✓ One accent (#FFC400) only on next/current block'
+  - '✓ Re-plan panel: "BEHIND · 2 BLOCKS MISSED YESTERDAY" in words…'
+  - '✕ Nothing clipped at the bottom · Today, behind'
+  - '✕ Start block in lower third · Today, behind'
+  - '✕ Content matches samples · Today'
   - ''
-  - 'fix prompt → 3 changes, 1 screen'
+  - 'fix prompt → 6 fixes, round 3'
 triggers:
   - review these
   - check this against my context
@@ -31,26 +33,22 @@ triggers:
 examples:
   title: what comes back
   note: it fixes only what failed. what works stays exactly as it is.
+  source: from a real run · Cram, a study planner (test project)
   panels:
     - label: → the report
       lines:
-        - '✕ Accent appears 3× on Today (rule: 1)'
-        - '✕ Label 9px from pill edge (rule: 14px)'
-        - '✓ Timeline density'
-        - '✓ Tab bar labels visible'
-        - '✕ Card radius 12 (allowed: 8 / 14 / 20)'
+        - '✓ One accent (#FFC400) only on next/current block; text on accent 11.7:1'
+        - '✓ Re-plan panel: "BEHIND · 2 BLOCKS MISSED YESTERDAY" in words…'
+        - '✕ Nothing clipped at the bottom · Today, behind · defect'
+        - '✕ Start block in lower third · Today, behind · direction'
+        - '✕ Content matches samples · Today · defect (minor)'
     - label: → the fix prompt
       lines:
-        - Round 2 fixes for Today. Change ONLY these.
-        - 1. Today — accent on 3 elements → Start only
-        - 2. Pills — label 9px from edge → 14px
-        - 3. Cards — radius 12 → 14
-        - 'KEEP EXACTLY: timeline density, tab labels'
-    - label: → back into context
-      lines:
-        - approved → asks, then logs it
-        - '## Decisions log'
-        - '- 2026-10-20: accent on primary only  [you]'
+        - 'Round 3 fixes for Cram design pass 1. Change ONLY these. Keep everything else exactly as it is.'
+        - '1. Today, behind (light + dark): Start block is missing → pin the same Start block button as normal Today…'
+        - '4. Today (light + dark): "Reliability vs validity" → 40 min…'
+        - 'KEEP EXACTLY:'
+        - '- The yellow next-block band on Today and the NOW band on Block; accent nowhere else'
 install:
   - key: code
     label: Claude Code

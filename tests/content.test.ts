@@ -98,6 +98,26 @@ describe("install copy (CONTEXT.md overrides the export)", () => {
   }
 });
 
+describe("example content", () => {
+  const SAMPLE = /c41e3a|8b1a1a|e63946|reelhouse/i;
+
+  it("carries no export sample data (#C41E3A reds, Reelhouse) outside the released skill files", () => {
+    for (const e of everything) {
+      const { inside, ...page } = e;
+      expect(JSON.stringify(page), e.href).not.toMatch(SAMPLE);
+      // a kit's own example files are ours; files synced from a release (skills/*/files) are shown as shipped
+      if (e.type === "kit" && e.skills.length === 0) expect(JSON.stringify(inside), e.href).not.toMatch(SAMPLE);
+    }
+  });
+
+  it("labels every example on a published page as coming from the Cram test run", () => {
+    for (const e of published) {
+      const blocks = e.type === "kit" ? [e.see, e.get] : e.type === "skill" ? [e.examples] : [];
+      for (const b of blocks.filter(Boolean)) expect(b!.source, e.href).toMatch(/real run.*Cram, a study planner \(test project\)/);
+    }
+  });
+});
+
 describe("schema", () => {
   it("rejects a value split by an unquoted comma in a YAML flow mapping", () => {
     const kit = getEntryBySlug("context-labs")!;

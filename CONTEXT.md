@@ -31,7 +31,7 @@
 | Hairline | `rgba(255,255,255,0.08)` | the grid: cell/section borders | [doc: design/*] |
 | Edge | `rgba(255,255,255,0.2–0.24)` | inputs, tablists, dashed submit tile, nested panels | [doc: design/*] |
 
-> `#C41E3A` and other reds appear in previews — that's **sample app content**, not a brand token. [doc: design/ContextLabsHome.dc.html]
+> Example content on real pages comes from a real run on the Cram test project (`~/Downloads/context-labs/tests/sandbox-cram/`), excerpted verbatim and labelled "from a real run · Cram, a study planner (test project)". Cram's `#FFC400` is sample app content, not a brand token. The export's `#C41E3A` / Reelhouse samples are not used. [you]
 
 ### Type
 - Families: **Geist** (400/500/600) — headings, UI, body; **Geist Mono** (400/500) — labels, meta, counters, badges, code. Loaded from Google Fonts in the export; use `next/font`. [doc: design/*] [you]
@@ -119,6 +119,8 @@ Pending — no code yet. Decided stack and conventions:
 - 2026-10-20: Release zips are copied from the `KhalerdAmeen/context-labs` v0.1.0 releases into `/content/kits/context-labs/files/`, never `/public`, served only via the signed `/api/file` link; re-copied each release. [you]
 - 2026-10-20: setup, handoff and review each get their own skill page linking back to the kit. [you]
 - 2026-10-20: Download flow = Loops upsert contact (source=slug, subscribed=opt-in) → transactional email `LOOPS_TRANSACTIONAL_ID` with `downloadUrl` data variable (signed, 7-day). [you]
+
+- 2026-10-20: Example panels and previews use verbatim excerpts from the Cram test run, labelled as such; the export's illustrated examples, Reelhouse and `#C41E3A` are removed. [you]
 
 ## Open questions
 - None open. (Raise new ones here as they come up.)

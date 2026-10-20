@@ -9,19 +9,20 @@ const published = getEntries({ includeDrafts: false });
 const everything = getEntries({ includeDrafts: true });
 
 describe("content set", () => {
-  it("publishes exactly the Context Labs kit and its three skills, in grid order", () => {
+  it("publishes exactly the Context Labs kit, its three skills and the app review rules, in grid order", () => {
     expect(published.map((e) => `${e.type}/${e.slug}`)).toEqual([
       "kit/context-labs",
       "skill/setup",
       "skill/handoff",
       "skill/review",
+      "context/app-review-rules",
     ]);
   });
 
   it("keeps the nine export placeholders as drafts (visible in dev only)", () => {
     const drafts = everything.filter((e) => e.draft);
     expect(drafts).toHaveLength(9);
-    expect(everything).toHaveLength(13);
+    expect(everything).toHaveLength(14);
   });
 
   it("never links a published page to a draft", () => {
@@ -60,6 +61,16 @@ describe("the kit and its skills", () => {
   });
 });
 
+describe("app review rules", () => {
+  it("ships setup's mobile-rules.md verbatim, credited to Khalid", () => {
+    const e = getEntryBySlug("app-review-rules", { includeDrafts: false })!;
+    const original = readFileSync(path.join(CONTENT_DIR, "skills/setup/files/references/mobile-rules.md"), "utf8").replace(/\n$/, "");
+    expect(e.type === "context" && e.fileText).toBe(original);
+    expect(e.author).toBe("khalid");
+    expect(e.draft).toBe(false);
+  });
+});
+
 describe("downloads", () => {
   it("every .zip lives in content/kits/context-labs/files, never in public/", () => {
     for (const e of everything.filter((x) => x.download)) {
@@ -80,7 +91,7 @@ describe("downloads", () => {
 });
 
 describe("install copy (CONTEXT.md overrides the export)", () => {
-  for (const e of published) {
+  for (const e of published.filter((x) => x.type !== "context")) {
     it(`${e.href}: Claude Code tab is the two marketplace commands`, () => {
       const code = e.install.find((t) => t.key === "code")!;
       expect(code.steps.slice(0, 2)).toEqual([
@@ -112,7 +123,7 @@ describe("example content", () => {
 
   it("labels every example on a published page as coming from the Cram test run", () => {
     for (const e of published) {
-      const blocks = e.type === "kit" ? [e.see, e.get] : e.type === "skill" ? [e.examples] : [];
+      const blocks = e.type === "kit" ? [e.see, e.get] : e.type === "skill" ? [e.examples] : e.applied.length ? [e] : [];
       for (const b of blocks.filter(Boolean)) expect(b!.source, e.href).toMatch(/real run.*Cram, a study planner \(test project\)/);
     }
   });

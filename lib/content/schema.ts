@@ -78,8 +78,12 @@ export const contextSchema = base.extend({
   type: z.literal("context"),
   /** the file in files/ that "copy file" and "download .md" deliver */
   file: z.string(),
+  /** the "rules" view; empty means show the file itself */
   rules: lines.default([]),
+  /** the "applied" view: the rules as one real project took them */
   applied: lines.default([]),
+  /** label for the applied view's source */
+  source,
   generate: z.object({ text: z.string(), href: z.string() }).optional(),
 });
 

@@ -103,6 +103,7 @@ Pending — no code yet. Decided stack and conventions:
 ## Launch
 - Status: building. Deploy waitlist first; flip to live later. [you]
 - Real content at launch: the **Context Labs kit** (the `context-labs` plugin) and its three skills — **setup**, **handoff**, **review**. The design's "context" entry = **setup** (renamed). [you]
+- Also real at launch: one context entry, **iOS & Android App Review rules** (`/context/app-review-rules`), a verbatim copy of the setup skill's `references/mobile-rules.md`, credited to Khalid. [you]
 - Pages: the kit gets its own page, and setup, handoff and review each get their own **skill page that links back to the kit**. [you]
 - Everything else in the export (Mobile App Kit, Website Kit, Deterministic Motion, About Me, iOS App Review, Claude Design Pass Plan, Pitch Deck, Brand Identity, Plan Mode Prompt) ships as **placeholder, `draft: true`** so the layout works; real ones come later. [you]
 - Promises we can prove: free; CC BY 4.0; works with Claude Code / Claude app / Claude Design / Cursor. Do **not** claim entry counts until they're real — the design's "12 entries · 2 kits" is placeholder. [you]
@@ -121,6 +122,9 @@ Pending — no code yet. Decided stack and conventions:
 - 2026-10-20: Download flow = Loops upsert contact (source=slug, subscribed=opt-in) → transactional email `LOOPS_TRANSACTIONAL_ID` with `downloadUrl` data variable (signed, 7-day). [you]
 
 - 2026-10-20: Example panels and previews use verbatim excerpts from the Cram test run, labelled as such; the export's illustrated examples, Reelhouse and `#C41E3A` are removed. [you]
+- 2026-10-20: The home page shows the waitlist unless `NEXT_PUBLIC_WAITLIST` is explicitly `false`; a missing variable never launches the library. [you]
+- 2026-10-20: Form errors use a text-colour bar, not the export's accent bar (accent stays on its four allowed uses). [you]
+- 2026-10-20: Publish "iOS & Android App Review rules" (context, not a draft) from setup's `mobile-rules.md`; the Context filter stays. [you]
 
 ## Open questions
 - None open. (Raise new ones here as they come up.)

@@ -1,13 +1,35 @@
-import { site } from "@/lib/site";
+import { Suspense } from "react";
+import { Hero } from "@/components/home/hero";
+import { Library, LibraryView } from "@/components/home/library";
+import { WaitlistGrid } from "@/components/home/waitlist";
+import { WaitlistForm } from "@/components/home/waitlist-form";
+import { countLabel, toCard } from "@/lib/content/card";
+import { getEntries } from "@/lib/content";
+import { waitlistMode } from "@/lib/site";
 
-// Phase 1 shell: hero only. Phase 3 replaces this with the library / waitlist home.
+export const ensureStatic = "navigation";
+
 export default function Home() {
+  const cards = getEntries().map(toCard);
+
+  if (waitlistMode) {
+    return (
+      <>
+        <Hero meta={`opening with ${cards.length} ${cards.length === 1 ? "entry" : "entries"} · free · cc by`}>
+          <WaitlistForm />
+        </Hero>
+        <WaitlistGrid cards={cards} />
+      </>
+    );
+  }
+
   return (
-    <section className="px-5 pt-12 pb-10 t:px-6 t:pt-18 t:pb-12 d:pt-22 d:pb-14">
-      <h1 className="text-44 leading-display font-medium tracking-display text-balance t:text-64 d:text-72">
-        the context behind good ai work.
-      </h1>
-      <p className="mt-5 max-w-52ch text-15 leading-body text-pretty text-muted">{site.description}</p>
-    </section>
+    <>
+      <Hero meta={`${countLabel(cards)} · free · cc by`} />
+      {/* static HTML carries the unfiltered library; the URL's filters apply on hydration */}
+      <Suspense fallback={<LibraryView cards={cards} type="all" tool={null} />}>
+        <Library cards={cards} />
+      </Suspense>
+    </>
   );
 }

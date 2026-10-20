@@ -1,10 +1,10 @@
 import { z } from "zod";
+import { TOOLS } from "./tools";
 
 // Frontmatter for /content/<type>/<slug>/index.md. Section data mirrors design/EntryPage.dc.html (PAGES).
 // Strings may contain `code` spans in backticks; the renderer turns them into mono chips.
 
-export const TOOLS = ["claude app", "claude code", "claude design"] as const;
-export type Tool = (typeof TOOLS)[number];
+export { TOOLS, type Tool } from "./tools";
 
 const lines = z.array(z.string());
 // .strict() on small objects: an unquoted comma inside a YAML `{ … }` splits the value into a

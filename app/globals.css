@@ -125,6 +125,33 @@
   }
 }
 
+/* A drawer's own background, registered so hover can transition it and the fade masks that
+   depend on it move together (design: background-color 200ms ease-out, fades match the cell). */
+@property --cell-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0e0f10;
+}
+
+@utility cell {
+  --cell-bg: var(--color-bg);
+  background-color: var(--cell-bg);
+  transition: --cell-bg 200ms ease-out;
+  &:hover,
+  &:focus-visible {
+    --cell-bg: var(--color-surface);
+  }
+}
+
+/* code-preview masks (design/CLCard.dc.html): bottom fade from 57px to 95px, 48px right fade */
+@utility fade-down {
+  background: linear-gradient(to bottom, transparent 57px, var(--cell-bg) 95px);
+}
+
+@utility fade-right {
+  background: linear-gradient(to right, transparent, var(--cell-bg));
+}
+
 @utility focus-inset {
   &:focus-visible {
     outline-offset: -2px;

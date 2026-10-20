@@ -24,6 +24,19 @@ export function Close() {
   );
 }
 
+/** ✕ / ✓ glyphs used in code previews (fail / pass). */
+export function LineMark({ mark, className }: { mark: "x" | "ok"; className?: string }) {
+  return mark === "x" ? (
+    <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="currentColor" strokeWidth="1.4" className={`flex-none ${className ?? ""}`} aria-label="fail" role="img">
+      <path d="M1 1l7 7M8 1L1 8" />
+    </svg>
+  ) : (
+    <svg width="10" height="9" viewBox="0 0 10 9" fill="none" stroke="currentColor" strokeWidth="1.4" className={`flex-none ${className ?? ""}`} aria-label="pass" role="img">
+      <path d="M1 4.8L3.8 7.6L9 1.2" />
+    </svg>
+  );
+}
+
 /** The logo mark: a 10px outlined square with a 4px centre dot. */
 export function Mark({ muted = false }: { muted?: boolean }) {
   return (

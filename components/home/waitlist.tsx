@@ -21,22 +21,25 @@ export function WaitlistGrid({ cards }: { cards: CardData[] }) {
   const max = Math.max(locked.m, locked.t, locked.d);
 
   return (
-    <div className="-mr-px grid grid-cols-1 border-t border-hairline t:grid-cols-2 d:grid-cols-4">
-      {cards.map((c) => (
-        <Card key={c.slug} card={c} className={`border-r border-b border-hairline ${c.type === "kit" ? "t:col-span-2" : ""}`} />
-      ))}
-      {Array.from({ length: max }, (_, i) => (
-        <div
-          key={i}
-          aria-hidden="true"
-          className={`min-h-40 items-start border-r border-b border-hairline p-5 t:min-h-109 t:p-6 ${shownAt(i, locked, "flex")}`}
-        >
-          <p className="label flex h-6 items-center gap-3 text-muted">
-            <Mark muted />
-            <span>drawer {String(cards.length + i + 1).padStart(2, "0")} — opens at launch</span>
-          </p>
-        </div>
-      ))}
-    </div>
+    <>
+      <h2 className="sr-only">the first drawers</h2>
+      <div className="-mr-px grid grid-cols-1 border-t border-hairline t:grid-cols-2 d:grid-cols-4">
+        {cards.map((c) => (
+          <Card key={c.slug} card={c} className={`border-r border-b border-hairline ${c.type === "kit" ? "t:col-span-2" : ""}`} />
+        ))}
+        {Array.from({ length: max }, (_, i) => (
+          <div
+            key={i}
+            aria-hidden="true"
+            className={`min-h-40 items-start border-r border-b border-hairline p-5 t:min-h-109 t:p-6 ${shownAt(i, locked, "flex")}`}
+          >
+            <p className="label flex h-6 items-center gap-3 text-muted">
+              <Mark muted />
+              <span>drawer {String(cards.length + i + 1).padStart(2, "0")} — opens at launch</span>
+            </p>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }

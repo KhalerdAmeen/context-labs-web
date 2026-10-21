@@ -17,7 +17,7 @@ function idempotencyKey(email: string, slug: string, now = Date.now()) {
 }
 
 export async function POST(request: Request) {
-  if (await isRateLimited("download", request)) return json(429, { error: MESSAGES.limited });
+  if (await isRateLimited(request)) return json(429, { error: MESSAGES.limited });
 
   const parsed = downloadInput.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return json(400, { error: MESSAGES.invalid });

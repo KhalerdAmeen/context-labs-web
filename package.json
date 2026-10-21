@@ -10,7 +10,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "bundle:kit": "node scripts/bundle-kit.mjs",
-    "sync:release": "node scripts/sync-release.mjs"
+    "sync:release": "node scripts/sync-release.mjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

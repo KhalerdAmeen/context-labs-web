@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // The Claude Design export (and its runtime) is a spec, not app code.
     "design/**",
+    // Conductor scratch space (screenshots, one-off scripts)
+    ".context/**",
   ]),
 ]);
 

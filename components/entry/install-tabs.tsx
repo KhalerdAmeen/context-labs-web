@@ -66,18 +66,20 @@ export function InstallTabs({ tabs }: { tabs: Tab[] }) {
           </button>
         ))}
       </div>
-      <ol role="tabpanel" id={`${id}-panel`} aria-labelledby={`${id}-tab-${tab.key}`}>
-        {tab.steps.map((s, i) => (
-          <li key={i} className="flex items-baseline gap-6 border-t border-hairline px-5 py-5 t:px-6">
-            <span aria-hidden="true" className="flex-none font-mono text-13 text-muted">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <div className="min-w-0 flex-1 text-15 leading-body">
-              {typeof s === "string" ? <RichText text={s} /> : <Command command={s.command} />}
-            </div>
-          </li>
-        ))}
-      </ol>
+      <div role="tabpanel" id={`${id}-panel`} aria-labelledby={`${id}-tab-${tab.key}`}>
+        <ol>
+          {tab.steps.map((s, i) => (
+            <li key={i} className="flex items-baseline gap-6 border-t border-hairline px-5 py-5 t:px-6">
+              <span aria-hidden="true" className="flex-none font-mono text-13 text-muted">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div className="min-w-0 flex-1 text-15 leading-body">
+                {typeof s === "string" ? <RichText text={s} /> : <Command command={s.command} />}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
     </>
   );
 }

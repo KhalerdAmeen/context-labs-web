@@ -130,6 +130,8 @@ Pending — no code yet. Decided stack and conventions:
 - 2026-10-22: A repeat download request for the same email + entry within 10 minutes doesn't send a second email. [you]
 - 2026-10-22: Primary domain is `context-labs.net` (no www); `SITE_URL` = `https://context-labs.net`. [you]
 - 2026-10-22: One Firewall rate-limit rule (`download`) covers both email forms — Vercel Hobby allows one rule. [you]
+- 2026-10-22: Reelhouse in the About bio is Khalid's real project and stays; only the export's Reelhouse *sample data* is excluded. [you]
+- 2026-10-22: Data deletion: DM @khalerdameen on X (stated on /privacy next to unsubscribe). [you]
 
 ## Open questions
 - None open. (Raise new ones here as they come up.)

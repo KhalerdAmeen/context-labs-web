@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { site } from "@/lib/site";
 
 // Plain-English privacy note. Laid out like /submit's "what gets accepted" rows.
@@ -10,10 +11,19 @@ export const metadata: Metadata = {
   description: "what context labs stores, why, and how to unsubscribe.",
 };
 
-const ROWS: [string, string][] = [
+const ROWS: [string, ReactNode][] = [
   ["what we store", "when you download a .zip: your email, which file you downloaded, and whether you ticked \"send me new kits\". if you join the waitlist: your email."],
   ["why", "to email you the private download link you asked for. we only send anything else if you opted in to new kits or joined the waitlist."],
-  ["unsubscribe", "use the unsubscribe link in any email we send."],
+  [
+    "unsubscribe or delete",
+    <>
+      use the unsubscribe link in any email we send. to have your email deleted, DM{" "}
+      <a href={site.xUrl} target="_blank" rel="noopener noreferrer" className="text-text underline underline-offset-4">
+        {site.handle}
+      </a>{" "}
+      on X.
+    </>,
+  ],
   ["who handles it", "Loops stores your email and sends our emails. Vercel hosts the site; its analytics don't use cookies or identify you. the submit form is run by Tally, under Tally's own privacy policy."],
   ["on your device", "after a download, your browser remembers your email so you aren't asked again. \"use a different email\" in the download pop-up forgets it."],
   ["what we don't do", "no cookies of our own, no ads, no selling or sharing your email."],

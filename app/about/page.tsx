@@ -5,7 +5,8 @@ import { Section } from "@/components/entry/section";
 import { ArrowUpRight } from "@/components/icons";
 
 // design/AboutPage.dc.html. The "context" example uses the Cram test project's accent rule instead of
-// the export's #C41E3A sample (CONTEXT.md: no export sample data on real pages).
+// the export's #C41E3A sample (CONTEXT.md: no export sample data on real pages). Reelhouse in the bio
+// is Khalid's real project, not the export's sample.
 
 export const ensureStatic = "navigation";
 
@@ -90,7 +91,7 @@ export default function About() {
       <Section id="who" n="04" title="who makes this">
         <div className="flex flex-col items-start gap-8 px-5 pb-10 t:px-6 d:pb-12">
           <p className="max-w-52ch text-20 leading-prompt text-pretty">
-            context labs is made by khalid — designer and builder behind routn and khadstudio. every entry is tested on a real project before it goes up.
+            context labs is made by khalid — designer and builder behind routn, reelhouse and khadstudio. every entry is tested on a real project before it goes up.
           </p>
           <Link href="/submit" className="inline-flex h-12 items-center gap-2.5 bg-accent px-6 text-15 font-medium text-bg">
             submit yours <ArrowUpRight size={10} strokeWidth={1.8} />

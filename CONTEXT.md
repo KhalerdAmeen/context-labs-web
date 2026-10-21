@@ -83,6 +83,7 @@ Pending — no code yet. Decided stack and conventions:
 - Launch gating: env var **`NEXT_PUBLIC_WAITLIST`** — `true` → waitlist home, `false` → live library. Ship waitlist first, flip to go live. [you]
 - Repos: this is the **website** repo; the Claude Code plugin marketplace + skill source live separately in `KhalerdAmeen/context-labs`. [you]
 - Secrets (Loops API key, `LOOPS_TRANSACTIONAL_ID`, etc.) live **only in Vercel env vars** — never in code or in CONTEXT.md. [you]
+- Rate limiting: **one** Vercel Firewall rule (Hobby allows one), a `@vercel/firewall` rule with rate-limit ID **`download`**, per IP, shared by `/api/download` and `/api/waitlist`. [you]
 
 ### Zip artifacts
 - The three release `.zip`s come from `github.com/KhalerdAmeen/context-labs/releases` (v0.1.0), copied into **`/content/kits/context-labs/files/`** in this repo. [you]
@@ -95,7 +96,7 @@ Pending — no code yet. Decided stack and conventions:
 3. Loops sends a **transactional email** (`LOOPS_TRANSACTIONAL_ID`) whose data variable **`downloadUrl`** is the signed `/api/file` link — private, expires in 7 days. [you]
 
 ### Rules that have bitten before
-- n/a — no code yet.
+- **Vercel:** env var changes only reach deployments built after the change — after editing them, redeploy the right target (Preview vs Production). A redeploy of a Production deployment rebuilds `main`, not the branch preview. [you]
 
 ### Known issues
 - n/a — no code yet.
@@ -125,6 +126,12 @@ Pending — no code yet. Decided stack and conventions:
 - 2026-10-20: The home page shows the waitlist unless `NEXT_PUBLIC_WAITLIST` is explicitly `false`; a missing variable never launches the library. [you]
 - 2026-10-20: Form errors use a text-colour bar, not the export's accent bar (accent stays on its four allowed uses). [you]
 - 2026-10-20: Publish "iOS & Android App Review rules" (context, not a draft) from setup's `mobile-rules.md`; the Context filter stays. [you]
+- 2026-10-22: An expired or invalid download link lands on a styled page (the "drawer not found" layout) with a button back to that entry's page. [you]
+- 2026-10-22: A repeat download request for the same email + entry within 10 minutes doesn't send a second email. [you]
+- 2026-10-22: Primary domain is `context-labs.net` (no www); `SITE_URL` = `https://context-labs.net`. [you]
+- 2026-10-22: One Firewall rate-limit rule (`download`) covers both email forms — Vercel Hobby allows one rule. [you]
+- 2026-10-22: Reelhouse in the About bio is Khalid's real project and stays; only the export's Reelhouse *sample data* is excluded. [you]
+- 2026-10-22: Data deletion: DM @khalerdameen on X (stated on /privacy next to unsubscribe). [you]
 
 ## Open questions
 - None open. (Raise new ones here as they come up.)

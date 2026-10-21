@@ -5,7 +5,7 @@ import { isRateLimited } from "@/lib/server/rate-limit";
 // POST { email, company } → Loops contact on the "Launch" list (source "waitlist"). No download.
 
 export async function POST(request: Request) {
-  if (await isRateLimited("waitlist", request)) return json(429, { error: MESSAGES.limited });
+  if (await isRateLimited(request)) return json(429, { error: MESSAGES.limited });
 
   const parsed = waitlistInput.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return json(400, { error: MESSAGES.invalid });

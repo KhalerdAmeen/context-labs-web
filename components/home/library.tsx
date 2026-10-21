@@ -82,6 +82,7 @@ export function LibraryView({ cards, type, tool, onType, onTool }: ViewProps) {
 
   return (
     <>
+      <h2 className="sr-only">the library</h2>
       <div role="group" aria-label="filter the library" className="no-scrollbar flex items-stretch overflow-x-auto border-y border-hairline px-1.5 whitespace-nowrap t:px-2.5">
         {TYPES.map(([k, label]) => (
           <FilterButton key={k} label={label} active={type === k} onClick={onType && (() => onType(k))} />

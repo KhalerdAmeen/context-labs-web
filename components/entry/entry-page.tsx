@@ -70,7 +70,7 @@ function Header({ e }: { e: Entry }) {
 
 function PrimaryAction({ e, className = "" }: { e: Entry; className?: string }) {
   if (e.type === "context") return <CopyButton text={e.fileText!} label="copy file" primary />;
-  return e.download ? <DownloadZipButton slug={e.slug} className={className} /> : null;
+  return e.download ? <DownloadZipButton slug={e.slug} file={e.download.split("/").pop()!} className={className} /> : null;
 }
 
 function SecondaryAction({ e }: { e: Entry }) {

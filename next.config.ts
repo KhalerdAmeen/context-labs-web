@@ -3,11 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
-  // The download routes read files the bundler can't see through imports: /api/download loads the
-  // content index to map a slug to its zip, /api/file streams the zip. Ship those files with them.
+  // The download routes read files the bundler can't see through imports: both load the content
+  // index (slug ↔ zip), and /api/file streams the zip itself. Ship those files with them.
   outputFileTracingIncludes: {
     "/api/download": ["./content/**/*"],
-    "/api/file": ["./content/kits/context-labs/files/*.zip"],
+    "/api/file": ["./content/**/*"],
   },
   turbopack: {
     rules: {

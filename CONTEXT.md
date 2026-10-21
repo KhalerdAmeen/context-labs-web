@@ -95,7 +95,7 @@ Pending — no code yet. Decided stack and conventions:
 3. Loops sends a **transactional email** (`LOOPS_TRANSACTIONAL_ID`) whose data variable **`downloadUrl`** is the signed `/api/file` link — private, expires in 7 days. [you]
 
 ### Rules that have bitten before
-- n/a — no code yet.
+- **Vercel:** env var changes only reach deployments built after the change — after editing them, redeploy the right target (Preview vs Production). A redeploy of a Production deployment rebuilds `main`, not the branch preview. [you]
 
 ### Known issues
 - n/a — no code yet.
@@ -125,6 +125,9 @@ Pending — no code yet. Decided stack and conventions:
 - 2026-10-20: The home page shows the waitlist unless `NEXT_PUBLIC_WAITLIST` is explicitly `false`; a missing variable never launches the library. [you]
 - 2026-10-20: Form errors use a text-colour bar, not the export's accent bar (accent stays on its four allowed uses). [you]
 - 2026-10-20: Publish "iOS & Android App Review rules" (context, not a draft) from setup's `mobile-rules.md`; the Context filter stays. [you]
+- 2026-10-22: An expired or invalid download link lands on a styled page (the "drawer not found" layout) with a button back to that entry's page. [you]
+- 2026-10-22: A repeat download request for the same email + entry within 10 minutes doesn't send a second email. [you]
+- 2026-10-22: Primary domain is `context-labs.net` (no www); `SITE_URL` = `https://context-labs.net`. [you]
 
 ## Open questions
 - None open. (Raise new ones here as they come up.)

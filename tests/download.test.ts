@@ -66,18 +66,32 @@ describe("GET /api/file", () => {
     expect(Buffer.from(await res.arrayBuffer()).equals(readFileSync(zipPath("context-labs-kit.zip")))).toBe(true);
   });
 
-  it("answers an expired link with 410 and plain words", async () => {
+  const location = (res: Response) => new URL(res.headers.get("location")!).pathname;
+
+  it("sends an expired link to the styled page for its entry", async () => {
     const url = signedFileUrl("http://localhost", "context-labs-setup.zip", SECRET, Date.now() - LINK_TTL_MS - 1000);
     const res = await file(new Request(url));
-    expect(res.status).toBe(410);
-    expect(await res.text()).toMatch(/expired/);
+    expect(res.status).toBe(303);
+    expect(location(res)).toBe("/link/expired/setup");
   });
 
-  it("404s a tampered link and a well-signed link to a file that isn't in the folder", async () => {
+  it("sends a tampered link to the invalid page, and never serves the zip", async () => {
     const tampered = signedFileUrl("http://localhost", "context-labs-setup.zip", SECRET).replace("setup", "review");
-    expect((await file(new Request(tampered))).status).toBe(404);
+    const res = await file(new Request(tampered));
+    expect(res.status).toBe(303);
+    expect(location(res)).toBe("/link/invalid/review");
+    expect(res.headers.get("content-type")).toBeNull();
+  });
+
+  it("sends a link we can't tie to an entry to the generic invalid page", async () => {
     const ghost = signedFileUrl("http://localhost", "not-a-real-kit.zip", SECRET);
-    expect((await file(new Request(ghost))).status).toBe(404);
+    expect(location(await file(new Request(ghost)))).toBe("/link/invalid");
+    expect(location(await file(new Request("http://localhost/api/file?f=../../.env&e=1&s=x")))).toBe("/link/invalid");
+  });
+
+  it("gives the kit's own zip back to the kit page", async () => {
+    const url = signedFileUrl("http://localhost", "context-labs-kit.zip", SECRET, Date.now() - LINK_TTL_MS - 1000);
+    expect(location(await file(new Request(url)))).toBe("/link/expired/context-labs");
   });
 });
 

@@ -29,6 +29,8 @@
   --text-13: 13px;
   --text-14: 14px;
   --text-15: 15px;
+  /* form fields below t: — iOS Safari zooms the page when a focused input is under 16px */
+  --text-16: 16px;
   --text-17: 17px;
   --text-18: 18px;
   --text-20: 20px;

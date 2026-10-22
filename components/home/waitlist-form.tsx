@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Mark } from "../icons";
 
 // design/WaitlistHome.dc.html: email + "get early access", then "you're in." in place of the form.
+// Mobile: field and button stacked, both full width, 48px tall; the field is 16px there so iOS
+// Safari doesn't zoom in on focus. From t: up it's the design's joined row at 15px.
 
 type State = { kind: "idle" | "sending" | "done" } | { kind: "error"; message: string };
 const FALLBACK = "something went wrong. try again in a minute.";
@@ -50,12 +52,12 @@ export function WaitlistForm() {
           aria-label="email"
           aria-invalid={state.kind === "error" || undefined}
           aria-describedby={state.kind === "error" ? "waitlist-error" : undefined}
-          className="h-12 min-w-0 flex-1 border border-edge bg-bg px-4 text-15 outline-none t:border-r-transparent"
+          className="h-12 w-full min-w-0 border border-edge bg-bg px-4 text-16 outline-none t:w-auto t:flex-1 t:border-r-transparent t:text-15"
         />
         <button
           type="submit"
           disabled={state.kind === "sending"}
-          className="h-12 flex-none cursor-pointer bg-accent px-6 text-15 font-medium text-bg disabled:cursor-wait"
+          className="h-12 w-full flex-none cursor-pointer bg-accent px-6 text-15 font-medium text-bg disabled:cursor-wait t:w-auto"
         >
           {state.kind === "sending" ? "joining…" : "get early access"}
         </button>

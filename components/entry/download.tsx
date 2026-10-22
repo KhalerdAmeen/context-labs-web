@@ -84,7 +84,9 @@ export function DownloadZipButton({ slug, file, className = "" }: { slug: string
   // keep Tab inside the dialog (showModal makes the page inert, but Tab can still reach browser chrome)
   function loopTab(e: React.KeyboardEvent<HTMLDialogElement>) {
     if (e.key !== "Tab") return;
-    const items = [...e.currentTarget.querySelectorAll<HTMLElement>("button, a[href], input:not([tabindex='-1'])")].filter((el) => !el.hasAttribute("disabled"));
+    const items = [...e.currentTarget.querySelectorAll<HTMLElement>("button, a[href], input:not([tabindex='-1'])")].filter(
+      (el) => !el.hasAttribute("disabled") && el.getClientRects().length > 0, // skip the copy that isn't displayed
+    );
     if (!items.length) return;
     const first = items[0];
     const last = items[items.length - 1];
@@ -180,7 +182,7 @@ export function DownloadZipButton({ slug, file, className = "" }: { slug: string
                 aria-label="email"
                 aria-invalid={state.kind === "form" && !!state.error ? true : undefined}
                 aria-describedby={state.kind === "form" && state.error ? `${id}-error` : undefined}
-                className="mt-4 h-12 w-full border border-edge bg-bg px-4 text-15 outline-none"
+                className="mt-4 h-12 w-full border border-edge bg-bg px-4 text-16 outline-none t:text-15"
               />
               {state.kind === "form" && state.error && (
                 <p id={`${id}-error`} role="alert" className="mt-3 border-l-2 border-text py-0.5 pl-3.5 text-14 leading-body">
@@ -208,17 +210,24 @@ export function DownloadZipButton({ slug, file, className = "" }: { slug: string
                 <input type="text" name="company" tabIndex={-1} autoComplete="off" />
               </label>
             </div>
-            <div className="flex flex-wrap items-center justify-between gap-2 border-t border-hairline px-5 py-3">
-              <Link href="/privacy" className="flex h-11 items-center text-14 text-muted underline underline-offset-4 hover:text-text">
-                how we use your email
-              </Link>
-              <div className="flex gap-2">
-                <button type="button" onClick={() => dialog.current?.close()} className="h-12 cursor-pointer px-4 text-15 text-muted">
-                  cancel
-                </button>
-                <button type="submit" disabled={sending} className="h-12 cursor-pointer bg-accent px-5 text-15 font-medium text-bg disabled:cursor-wait">
-                  {sending ? "sending…" : "send the link"}
-                </button>
+            {/* mobile: the send button full width under the field; from t: up it sits bottom-right.
+                Two copies, one displayed, so focus order always matches what you see. */}
+            <div className="border-t border-hairline px-5 py-3">
+              <button type="submit" disabled={sending} className="mb-1 h-12 w-full cursor-pointer bg-accent px-5 text-15 font-medium text-bg disabled:cursor-wait t:hidden">
+                {sending ? "sending…" : "send the link"}
+              </button>
+              <div className="flex items-center justify-between gap-2">
+                <Link href="/privacy" className="flex h-11 items-center text-14 text-muted underline underline-offset-4 hover:text-text">
+                  how we use your email
+                </Link>
+                <div className="flex gap-2">
+                  <button type="button" onClick={() => dialog.current?.close()} className="h-12 cursor-pointer px-4 text-15 text-muted">
+                    cancel
+                  </button>
+                  <button type="submit" disabled={sending} className="hidden h-12 cursor-pointer bg-accent px-5 text-15 font-medium text-bg disabled:cursor-wait t:block">
+                    {sending ? "sending…" : "send the link"}
+                  </button>
+                </div>
               </div>
             </div>
           </form>

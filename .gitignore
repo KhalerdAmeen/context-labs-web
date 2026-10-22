@@ -31,4 +31,4 @@ next-env.d.ts
 
 # email build outputs (npm run email:zip / email:preview)
 /emails/*.zip
-/emails/*/preview.html
+/emails/*/preview*.html

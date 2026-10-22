@@ -15,6 +15,22 @@ export function zipNameOf(download: string) {
   return name;
 }
 
+/** Where to upload a zip in the Claude app (CONTEXT.md → Install & distribution). */
+const APP_PATH = "in the Claude app, Settings → Features → Skills";
+
+/**
+ * The transactional email's data variables (the Loops template uses all three):
+ * downloadUrl — the signed link · fileName — the zip's name · nextStep — what to do with it.
+ * The kit zip holds the three skill zips, so it has to be unzipped before uploading.
+ */
+export function emailVariables(o: { downloadUrl: string; fileName: string; isKit: boolean }) {
+  return {
+    downloadUrl: o.downloadUrl,
+    fileName: o.fileName,
+    nextStep: o.isKit ? `next: unzip it first, then ${APP_PATH} → upload each .zip` : `next: ${APP_PATH} → upload the .zip`,
+  };
+}
+
 /** The zip's bytes, only if `name` is one of the files actually in the downloads folder. */
 export function readZip(name: string): Buffer | null {
   if (!FILE_NAME.test(name) || !existsSync(DOWNLOAD_DIR)) return null;

@@ -1,14 +1,14 @@
 <mjml lang="en">
   <!--
-    context labs · download email (Loops transactional, data variable: downloadUrl)
+    context labs · download email (Loops transactional; data variables: downloadUrl, fileName, nextStep)
     Tokens from CONTEXT.md: bg #0E0F10 · card #141517 · text #EDEBE7 · muted #8C8A86 · accent #FF5B1F (button only)
     Hairlines are the 8%-white token pre-blended to solid hex, because Outlook ignores rgba borders:
       #212223 = 8% white over #0E0F10 (card edge) · #27282A = 8% white over #141517 (inside the card)
     No images, so it reads the same with images blocked. Zero radius everywhere.
   -->
   <mj-head>
-    <mj-title>your file is ready</mj-title>
-    <mj-preview>your file is ready. the link works for 7 days.</mj-preview>
+    <mj-title>{DATA_VARIABLE:fileName} is ready</mj-title>
+    <mj-preview>{DATA_VARIABLE:fileName} is ready. the link works for 7 days.</mj-preview>
     <mj-font name="Geist" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;display=swap" />
     <mj-font name="Geist Mono" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&amp;display=swap" />
     <mj-raw>
@@ -34,6 +34,7 @@
       :root { color-scheme: dark; supported-color-schemes: dark; }
       a { color: inherit; }
       .fallback a { word-break: break-all; }
+      .headline div { overflow-wrap: anywhere; word-break: break-word; }
       /* Outlook.com dark mode tags elements it recolours; keep the button's dark label on the accent */
       [data-ogsc] .button a, [data-ogsc] .button p { color: #0E0F10 !important; }
     </mj-style>
@@ -48,7 +49,8 @@
         </mj-text>
         <mj-divider border-color="#27282A" border-width="1px" padding="0" />
 
-        <mj-text padding="28px 24px 0" font-size="24px" line-height="29px" font-weight="500" letter-spacing="-0.24px">your file is ready</mj-text>
+        <!-- file names have no spaces: let them wrap anywhere on narrow screens -->
+        <mj-text css-class="headline" padding="28px 24px 0" font-size="24px" line-height="29px" font-weight="500" letter-spacing="-0.24px">{DATA_VARIABLE:fileName} is ready</mj-text>
         <mj-text padding="8px 24px 0" color="#8C8A86">the link works for 7 days.</mj-text>
         <mj-button
           href="{DATA_VARIABLE:downloadUrl}"
@@ -64,6 +66,8 @@
           border-radius="0"
           padding="24px 24px 0"
         >download</mj-button>
+        <!-- what to do with it: "upload the .zip", or for the kit "unzip it first, then upload each .zip" -->
+        <mj-text padding="14px 24px 0" font-size="13px" line-height="19px" color="#EDEBE7">{DATA_VARIABLE:nextStep}</mj-text>
 
         <!-- plain-text fallback for clients that block or break the button -->
         <mj-text padding="24px 24px 0" font-size="13px" line-height="19px" color="#8C8A86">button not working? paste this link into your browser:</mj-text>

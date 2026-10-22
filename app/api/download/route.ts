@@ -1,14 +1,14 @@
 import { createHash } from "node:crypto";
 import { getEntryBySlug } from "@/lib/content";
-import { linkOrigin, signingSecret, zipNameOf } from "@/lib/server/downloads";
+import { emailVariables, linkOrigin, signingSecret, zipNameOf } from "@/lib/server/downloads";
 import { downloadInput, json, MESSAGES } from "@/lib/server/forms";
 import { downloadContact, loops, LoopsError } from "@/lib/server/loops";
 import { isRateLimited } from "@/lib/server/rate-limit";
 import { signedFileUrl } from "@/lib/server/signed-link";
 
-// POST { slug, email, optIn, company } → Loops contact (source = slug) + a transactional email whose
-// `downloadUrl` is a signed /api/file link valid for 7 days. The client never names a file: the slug
-// maps to its zip here.
+// POST { slug, email, optIn, company } → Loops contact (source = slug) + a transactional email with
+// downloadUrl (a signed /api/file link valid for 7 days), fileName and nextStep.
+// The client never names a file: the slug maps to its zip here.
 
 /** Same email + entry within 10 minutes = one send (double clicks, retries). */
 function idempotencyKey(email: string, slug: string, now = Date.now()) {
@@ -32,7 +32,9 @@ export async function POST(request: Request) {
     console.error("[download] DOWNLOAD_SIGNING_SECRET missing");
     return json(500, { error: MESSAGES.generic });
   }
-  const downloadUrl = signedFileUrl(linkOrigin(request), zipNameOf(entry.download), secret);
+  const fileName = zipNameOf(entry.download);
+  const downloadUrl = signedFileUrl(linkOrigin(request), fileName, secret);
+  const dataVariables = emailVariables({ downloadUrl, fileName, isKit: entry.type === "kit" });
 
   const apiKey = process.env.LOOPS_API_KEY;
   const transactionalId = process.env.LOOPS_TRANSACTIONAL_ID;
@@ -50,7 +52,7 @@ export async function POST(request: Request) {
     const exists = await client.contactExists(email);
     await client.updateContact(downloadContact({ email, slug, optIn, exists }));
     await client
-      .sendTransactional({ transactionalId, email, dataVariables: { downloadUrl }, idempotencyKey: idempotencyKey(email, slug) })
+      .sendTransactional({ transactionalId, email, dataVariables, idempotencyKey: idempotencyKey(email, slug) })
       .catch((e) => {
         // 409: this exact email went out moments ago — that's a success for the person clicking
         if (!(e instanceof LoopsError && / 409 /.test(e.message))) throw e;

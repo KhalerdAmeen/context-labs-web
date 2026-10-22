@@ -131,6 +131,12 @@ describe("POST /api/download", () => {
     const link = tx.dataVariables.downloadUrl as string;
     expect(link).toMatch(/^https:\/\/context-labs\.net\/api\/file\?f=context-labs-setup\.zip&/);
     expect(verifyFileLink(params(link), SECRET)).toEqual({ ok: true, file: "context-labs-setup.zip" });
+    // exactly the three variables the Loops template uses
+    expect(tx.dataVariables).toEqual({
+      downloadUrl: link,
+      fileName: "context-labs-setup.zip",
+      nextStep: "next: in the Claude app, Settings → Features → Skills → upload the .zip",
+    });
   });
 
   it("gives the kit page the kit bundle", async () => {
@@ -138,7 +144,11 @@ describe("POST /api/download", () => {
     vi.stubGlobal("fetch", fetchSpy);
     await download(req({ slug: "context-labs", email: "new@person.co", optIn: true }));
     expect(JSON.parse(fetchSpy.mock.calls[1][1].body)).toEqual({ email: "new@person.co", source: "context-labs", subscribed: true });
-    expect(JSON.parse(fetchSpy.mock.calls[2][1].body).dataVariables.downloadUrl).toContain("f=context-labs-kit.zip");
+    const vars = JSON.parse(fetchSpy.mock.calls[2][1].body).dataVariables;
+    expect(vars.downloadUrl).toContain("f=context-labs-kit.zip");
+    expect(vars.fileName).toBe("context-labs-kit.zip");
+    // the kit zip holds three skill zips: unzip before uploading
+    expect(vars.nextStep).toBe("next: unzip it first, then in the Claude app, Settings → Features → Skills → upload each .zip");
   });
 
   it("counts Loops' 409 (same email moments ago) as sent", async () => {

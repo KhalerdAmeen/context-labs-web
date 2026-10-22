@@ -28,3 +28,7 @@ npm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 /.next-waitlist/
+
+# email build outputs (npm run email:zip / email:preview)
+/emails/*.zip
+/emails/*/preview.html

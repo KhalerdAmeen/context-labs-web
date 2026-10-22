@@ -1,0 +1,86 @@
+<mjml lang="en">
+  <!--
+    context labs · download email (Loops transactional, data variable: downloadUrl)
+    Tokens from CONTEXT.md: bg #0E0F10 · card #141517 · text #EDEBE7 · muted #8C8A86 · accent #FF5B1F (button only)
+    Hairlines are the 8%-white token pre-blended to solid hex, because Outlook ignores rgba borders:
+      #212223 = 8% white over #0E0F10 (card edge) · #27282A = 8% white over #141517 (inside the card)
+    No images, so it reads the same with images blocked. Zero radius everywhere.
+  -->
+  <mj-head>
+    <mj-title>your file is ready</mj-title>
+    <mj-preview>your file is ready. the link works for 7 days.</mj-preview>
+    <mj-font name="Geist" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;display=swap" />
+    <mj-font name="Geist Mono" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&amp;display=swap" />
+    <mj-raw>
+      <!-- this email is already dark: ask Apple Mail / iOS Mail not to recolour it -->
+      <meta name="color-scheme" content="dark" />
+      <meta name="supported-color-schemes" content="dark" />
+      <!-- Outlook on Windows falls back to Times when the first font isn't installed: pin safe fonts there -->
+      <!--[if mso]>
+      <style>
+        td, div, p, a, span { font-family: 'Segoe UI', Arial, Helvetica, sans-serif !important; }
+        .mono div, .mono a, .mono span { font-family: Consolas, 'Courier New', monospace !important; }
+      </style>
+      <![endif]-->
+    </mj-raw>
+    <mj-attributes>
+      <mj-all font-family="Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" />
+      <mj-text color="#EDEBE7" font-size="15px" line-height="22px" padding="0" />
+      <mj-section padding="0" />
+      <mj-column padding="0" />
+      <mj-class name="mono" font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Courier New', monospace" />
+    </mj-attributes>
+    <mj-style>
+      :root { color-scheme: dark; supported-color-schemes: dark; }
+      a { color: inherit; }
+      .fallback a { word-break: break-all; }
+      /* Outlook.com dark mode tags elements it recolours; keep the button's dark label on the accent */
+      [data-ogsc] .button a, [data-ogsc] .button p { color: #0E0F10 !important; }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#0E0F10" width="560px">
+    <!-- the card: one column with a hairline frame and sharp corners; 16px of page around it on every width -->
+    <mj-section padding="32px 16px 0">
+      <mj-column background-color="#141517" border="1px solid #212223">
+        <mj-text mj-class="mono" css-class="mono" padding="14px 24px" font-size="12px" line-height="18px" letter-spacing="0.72px" color="#8C8A86">
+          CONTEXT LABS · DOWNLOAD
+        </mj-text>
+        <mj-divider border-color="#27282A" border-width="1px" padding="0" />
+
+        <mj-text padding="28px 24px 0" font-size="24px" line-height="29px" font-weight="500" letter-spacing="-0.24px">your file is ready</mj-text>
+        <mj-text padding="8px 24px 0" color="#8C8A86">the link works for 7 days.</mj-text>
+        <mj-button
+          href="{DATA_VARIABLE:downloadUrl}"
+          css-class="button"
+          align="left"
+          background-color="#FF5B1F"
+          color="#0E0F10"
+          font-size="15px"
+          font-weight="500"
+          line-height="20px"
+          height="48px"
+          inner-padding="14px 28px"
+          border-radius="0"
+          padding="24px 24px 0"
+        >download</mj-button>
+
+        <!-- plain-text fallback for clients that block or break the button -->
+        <mj-text padding="24px 24px 0" font-size="13px" line-height="19px" color="#8C8A86">button not working? paste this link into your browser:</mj-text>
+        <mj-text mj-class="mono" css-class="mono fallback" padding="6px 24px 28px" font-size="13px" line-height="19px" color="#B4B2AD">
+          <a href="{DATA_VARIABLE:downloadUrl}" style="color: #B4B2AD; text-decoration: underline; word-break: break-all;">{DATA_VARIABLE:downloadUrl}</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <!-- footer, on the page background, aligned with the card's text -->
+    <mj-section padding="20px 16px 40px">
+      <mj-column>
+        <mj-text mj-class="mono" css-class="mono" padding="0 25px" font-size="12px" line-height="18px" letter-spacing="0.72px" color="#8C8A86">
+          <a href="https://context-labs.net" style="color: #8C8A86; text-decoration: underline;">CONTEXT-LABS.NET</a>&nbsp;·&nbsp;<a href="https://context-labs.net/privacy" style="color: #8C8A86; text-decoration: underline;">PRIVACY</a>
+        </mj-text>
+        <mj-text padding="8px 25px 0" font-size="13px" line-height="19px" color="#8C8A86">you got this because you asked for a download.</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

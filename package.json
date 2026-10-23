@@ -11,7 +11,9 @@
     "test": "vitest run",
     "bundle:kit": "node scripts/bundle-kit.mjs",
     "sync:release": "node scripts/sync-release.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "email:zip": "node scripts/email.mjs zip download",
+    "email:preview": "node scripts/email.mjs preview download"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
@@ -32,6 +34,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
     "fflate": "^0.8.3",
+    "mjml": "^4.18.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^5.0.5"

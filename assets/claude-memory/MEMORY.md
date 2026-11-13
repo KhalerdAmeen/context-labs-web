@@ -1,0 +1,1 @@
+- [Phase commit + push workflow](phase-commit-push-workflow.md) — commit and push after every phase, stop for review, never merge to main

@@ -6,13 +6,21 @@
 /test-results
 /playwright-report
 
-# next.js
+# next.js / build output
 /.next/
+/.next-waitlist/
 /out/
+/build/
+/dist/
 
 # misc
 .DS_Store
+
+# keys and secrets — values live only in Vercel env vars
 *.pem
+*.key
+*.p12
+*.crt
 
 # debug
 npm-debug.log*
@@ -27,8 +35,10 @@ npm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-/.next-waitlist/
 
 # email build outputs (npm run email:zip / email:preview)
 /emails/*.zip
 /emails/*/preview*.html
+
+# Conductor workspace scratch (screenshots, Lighthouse reports, one-off QA scripts) — local only
+/.context/
